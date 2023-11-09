@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherServer", "WeatherServer\WeatherServer.csproj", "{79A6EEA7-E876-4CF8-93E7-79E76FDE2B3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherServer", "WeatherServer\WeatherServer.csproj", "{79A6EEA7-E876-4CF8-93E7-79E76FDE2B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherServer.Core", "WeatherServer.Core\WeatherServer.Core.csproj", "{9F58D1EF-1E0B-4033-AE51-F950AB7250EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherServer.Application", "WeatherServer.Application\WeatherServer.Application.csproj", "{EC9BF94B-CF0D-4943-944E-7A588DC6F3B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherServer.Api", "WeatherServer.Api\WeatherServer.Api.csproj", "{4A61821C-6253-45F4-B27D-B6F7ED013F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherServer.DataAccess", "WeatherServer.DataAccess\WeatherServer.DataAccess.csproj", "{C9049463-DAE7-44A6-AA4F-E32DCEEBF256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{79A6EEA7-E876-4CF8-93E7-79E76FDE2B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79A6EEA7-E876-4CF8-93E7-79E76FDE2B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79A6EEA7-E876-4CF8-93E7-79E76FDE2B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F58D1EF-1E0B-4033-AE51-F950AB7250EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F58D1EF-1E0B-4033-AE51-F950AB7250EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F58D1EF-1E0B-4033-AE51-F950AB7250EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F58D1EF-1E0B-4033-AE51-F950AB7250EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC9BF94B-CF0D-4943-944E-7A588DC6F3B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC9BF94B-CF0D-4943-944E-7A588DC6F3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC9BF94B-CF0D-4943-944E-7A588DC6F3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC9BF94B-CF0D-4943-944E-7A588DC6F3B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A61821C-6253-45F4-B27D-B6F7ED013F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A61821C-6253-45F4-B27D-B6F7ED013F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A61821C-6253-45F4-B27D-B6F7ED013F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A61821C-6253-45F4-B27D-B6F7ED013F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9049463-DAE7-44A6-AA4F-E32DCEEBF256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9049463-DAE7-44A6-AA4F-E32DCEEBF256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9049463-DAE7-44A6-AA4F-E32DCEEBF256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9049463-DAE7-44A6-AA4F-E32DCEEBF256}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
