@@ -47,7 +47,6 @@ export class RadiationMapComponent implements AfterViewInit, OnInit {
       'UA_71_Cherkaska.geojson',
       'UA_74_Chernihivska.geojson',
       'UA_77_Chernivetska.geojson',
-      // Add other file names as needed
     ];
 
     geoJsonFiles.forEach((fileName) => {
