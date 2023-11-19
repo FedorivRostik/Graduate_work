@@ -9,6 +9,9 @@ module.exports = {
       xl: "1440px",
     },
     extend: {
+      colors: {
+        "tifanny-blue": "#BCECE0",
+      },
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
       },
