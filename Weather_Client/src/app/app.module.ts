@@ -13,6 +13,7 @@ import { SignUpComponent } from './base/sign-up/sign-up.component';
 import { LogInComponent } from './base/log-in/log-in.component';
 import { CleanWrapperComponent } from './base/wrappers/clean-wrapper/clean-wrapper.component';
 import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.component';
+import { ProductsComponent } from './pages/products/products/products.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.com
     LogInComponent,
     CleanWrapperComponent,
     AllWrapperComponent,
+    ProductsComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRouteModule],
   providers: [],

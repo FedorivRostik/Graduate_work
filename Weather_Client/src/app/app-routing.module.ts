@@ -6,6 +6,7 @@ import { SignUpComponent } from './base/sign-up/sign-up.component';
 import { LogInComponent } from './base/log-in/log-in.component';
 import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.component';
 import { CleanWrapperComponent } from './base/wrappers/clean-wrapper/clean-wrapper.component';
+import { ProductsComponent } from './pages/products/products/products.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: '', component: HomeComponent },
       { path: 'maps/radiation-map', component: RadiationMapComponent },
+      { path: 'products/products', component: ProductsComponent },
     ],
   },
   {

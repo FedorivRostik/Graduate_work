@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{2BE95A51-AE07-4361-9418-2669E77539B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{68DD67CD-2DF7-46EE-9803-FC289A8369FC}"
+	ProjectSection(SolutionItems) = preProject
+		info.txt = info.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.Services.AuthApi", "Weather.Services.AuthApi\Weather.Services.AuthApi.csproj", "{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.Services.ProductApi", "Weather.Services.ProductApi\Weather.Services.ProductApi.csproj", "{38FECBC7-8654-4C02-81DA-55523F8C7798}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38FECBC7-8654-4C02-81DA-55523F8C7798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FECBC7-8654-4C02-81DA-55523F8C7798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FECBC7-8654-4C02-81DA-55523F8C7798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FECBC7-8654-4C02-81DA-55523F8C7798}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2CEF9C0-0D0A-4E3C-92B1-A5471D821BF4} = {68DD67CD-2DF7-46EE-9803-FC289A8369FC}
+		{38FECBC7-8654-4C02-81DA-55523F8C7798} = {68DD67CD-2DF7-46EE-9803-FC289A8369FC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F4A38D7-0828-4D23-9F0E-2EDE35C46D77}
+	EndGlobalSection
+EndGlobal

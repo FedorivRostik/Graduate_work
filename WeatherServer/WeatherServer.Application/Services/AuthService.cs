@@ -13,6 +13,7 @@ using WeatherServer.DataAccess;
 using WeatherServer.Shared.Dtos.User;
 
 namespace WeatherServer.Application.Services;
+
 public class AuthService : IAuthService
 {
 	private readonly UserManager<WeatherUser> _userManager;
@@ -21,7 +22,8 @@ public class AuthService : IAuthService
 	private readonly IConfiguration _configuration;
 	private readonly TokenValidationParameters _tokenValidationParameters;
 
-	public AuthService(UserManager<WeatherUser> userManager,
+	public AuthService(
+		UserManager<WeatherUser> userManager,
 		RoleManager<IdentityRole> roleManager,
 		WeatherDbContext context,
 		IConfiguration configuration,
