@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Weather.Services.ProductApi.Dtos;
 using Weather.Services.ProductApi.Dtos.Extensions;
 using Weather.Services.ProductApi.Dtos.Products;
 using Weather.Services.ProductApi.Services.Interfaces;
+using Weather.Services.ProductApi.Utilities.Constants;
 
 namespace Weather.Services.ProductApi.Controllers;
 
@@ -13,21 +15,22 @@ public class ProductControllerApi : ControllerBase
     private readonly IProductService _productService;
     private ResponseDto ResponseDto { get; set; } = new();
 
-    public ProductControllerApi
-        (IProductService productService
+    public ProductControllerApi(
+        IProductService productService
         )
     {
         _productService = productService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProductAsync([FromBody]ProductCreateDto productDto)
+    public async Task<IActionResult> CreateProductAsync([FromBody] ProductCreateDto productDto)
     {
         var result = await _productService.AddProductAsync(productDto);
 
         return Ok(ResponseDto.SetResult(result));
     }
 
+    [Authorize(Roles = AppRoles.AdminRole)]
     [HttpPut]
     public async Task<IActionResult> UpdateProductAsync([FromBody] ProductDto productDto)
     {
@@ -35,7 +38,7 @@ public class ProductControllerApi : ControllerBase
 
         return Ok(ResponseDto.SetResult(result));
     }
-
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync()
     {

@@ -36,7 +36,7 @@ public class ProductService : IProductService
 
         if (result is null) 
         {
-            throw new Exception("cannot find");
+            throw new  InvalidOperationException("cannot find");
         }
 
         _db.Products.Remove(result);
@@ -57,10 +57,10 @@ public class ProductService : IProductService
 
         if (result is null)
         {
-            throw new Exception("cannot find");
+            throw new InvalidOperationException("cannot find");
         }
 
-        return _mapper.Map<ProductDto>(result); ;
+        return _mapper.Map<ProductDto>(result); 
     }
 
     public async Task<ProductDto> GetBySlugProductAsync(string slug)
@@ -69,10 +69,10 @@ public class ProductService : IProductService
 
         if (result is null)
         {
-            throw new Exception("cannot find");
+            throw new InvalidOperationException("cannot find");
         }
 
-        return _mapper.Map<ProductDto>(result); ;
+        return _mapper.Map<ProductDto>(result);
     }
 
     public async Task<ProductDto> UpdateProductAsync(ProductDto productDto)
@@ -81,12 +81,12 @@ public class ProductService : IProductService
 
         if (result is null)
         {
-            throw new Exception("cannot find");
+            throw new InvalidOperationException("cannot find");
         }
 
         var product = _mapper.Map<Product>(productDto);
 
-        product = _db.Products.Update(product).Entity;
+        product = _db.Products?.Update(product)!.Entity;
         await _db.SaveChangesAsync();
         return _mapper.Map<ProductDto>(result); 
     }

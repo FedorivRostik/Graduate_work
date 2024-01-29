@@ -1,1 +1,2 @@
-ProductAPI - 7000
+ProductAPI - https://localhost:7000/api/products
+AuthAPI - https://localhost:7001/api/auth

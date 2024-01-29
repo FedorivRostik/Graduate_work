@@ -1,11 +1,20 @@
-<div class="min-w-full bg-white">
-  <nav class="relative container mx-auto p-6">
+<div class="min-w-full bg-white shadow mb-2">
+  <nav class="relative container mx-auto py-4">
     <!-- Flex Container For All Items -->
     <div class="flex items-center justify-between">
       <!-- Flex Container for Logo/Menu -->
       <div class="flex items-center space-x-20">
         <!-- Logo -->
-        <a [routerLink]="['/']" routerLinkActive="router-link-active">
+        <a
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+          class="flex items-center"
+        >
+          <img
+            src="/assets/images/health-healthcare-location-map-medicine-navigation-svgrepo-com.png"
+            alt=""
+            class="w-12 object-cover"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="250"
@@ -50,12 +59,13 @@
 
       <!-- Right Menu -->
       <div
+        *ngIf="isLogged"
         class="hidden items-center space-x-6 font-bold text-gray-500 duration-200 lg:flex"
       >
         <a
+          class="hover:text-gray-700 cursor-pointer"
           [routerLink]="['/log-in']"
           routerLinkActive="router-link-active"
-          class="hover:text-gray-700 cursor-pointer"
           >Login</a
         >
         <a
@@ -63,6 +73,18 @@
           routerLinkActive="router-link-active"
           class="px-8 py-3 font-bold text-white bg-cyan-500 rounded-full duration-200 hover:opacity-70"
           >Sign Up</a
+        >
+      </div>
+      <div
+        *ngIf="!isLogged"
+        class="hidden items-center space-x-6 font-bold text-gray-500 duration-200 lg:flex"
+      >
+        <a
+          [routerLink]="['/log-in']"
+          routerLinkActive="router-link-active"
+          class="px-8 py-3 font-bold text-white bg-indigo-500 rounded-full duration-200 hover:opacity-70"
+          (click)="onLogOut()"
+          >Logout</a
         >
       </div>
       <!-- @todo hamburger -->

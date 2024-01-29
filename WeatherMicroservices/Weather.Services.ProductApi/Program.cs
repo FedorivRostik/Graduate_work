@@ -36,12 +36,17 @@ builder.Services.AddCors(options =>
 });
 #endregion
 
+#region AutoMapper
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+#endregion
+
+#region SwaggerAuth
+builder.AddAppAuthentication();
+#endregion
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
@@ -50,12 +55,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 #region Cors
 app.UseCors(x => x
            .AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader());
-#endregion
+#endregion  
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

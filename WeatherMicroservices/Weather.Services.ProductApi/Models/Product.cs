@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Weather.Services.ProductApi.Helpers;
-
-namespace Weather.Services.ProductApi.Models;
+﻿namespace Weather.Services.ProductApi.Models;
 
 public class Product
 {
     public Guid ProductId { get; set; }
-    public string Name { get; set; }
-    public string Slug { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
     public int Amount { get; set; }
     public decimal Price { get; set; }
     public string? Description { get; set; }
