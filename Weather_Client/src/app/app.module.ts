@@ -16,6 +16,9 @@ import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.com
 import { ProductsComponent } from './pages/products/products/products.component';
 import { FormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwtInterceptor';
+import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
+import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
+import { AdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-product/admin-product.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { JwtInterceptor } from './interceptors/jwtInterceptor';
     CleanWrapperComponent,
     AllWrapperComponent,
     ProductsComponent,
+    MainAdminPageComponent,
+    AdminProductsComponent,
+    AdminProductComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRouteModule, FormsModule],
   providers: [

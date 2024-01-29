@@ -10,7 +10,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProduct(): Observable<ResponseModel<Product[]>> {
+  getProducts(): Observable<ResponseModel<Product[]>> {
     return this.http
       .get<ResponseModel<Product[]>>('https://localhost:7000/api/products')
       .pipe();

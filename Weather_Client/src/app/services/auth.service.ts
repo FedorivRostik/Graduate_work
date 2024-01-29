@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ResponseModel } from '../models/response.model';
 import { LoginResponse } from '../models/auth/loginResponse.model';
 import { LoginRequest } from '../models/auth/loginRequest.model';
+import { jwtDecode } from 'jwt-decode';
+import { AppRoles } from '../utilities/enums/appRoles.enums';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,7 +17,13 @@ export class AuthService {
         'https://localhost:7001/api/auth/login',
         loginRequest
       )
-      .pipe();
+      .pipe(
+        tap((response) => {
+          localStorage.setItem('access_token', response.resultObj?.token!);
+          localStorage.setItem('user_role', this.getUserRoleForLocalStorage());
+          localStorage.setItem('user_id', this.getUserIdForLocalStorage());
+        })
+      );
   }
 
   checkIfAuth(): boolean {
@@ -24,5 +32,44 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('user_id');
+  }
+
+  getUserRole(): AppRoles {
+    return <AppRoles>localStorage.getItem('user_role') ?? AppRoles.Guest;
+  }
+
+  getUserId(): string {
+    return <AppRoles>localStorage.getItem('user_id');
+  }
+
+  IsRole(appRole: AppRoles): boolean {
+    return this.getUserRole() === appRole;
+  }
+
+  private getUserIdForLocalStorage() {
+    const tokenStr = localStorage.getItem('access_token');
+    if (tokenStr != null) {
+      try {
+        const bearerToken: any = jwtDecode(tokenStr);
+        return bearerToken.sub;
+      } catch (err) {
+        return null;
+      }
+    }
+  }
+
+  private getUserRoleForLocalStorage(): AppRoles {
+    const tokenStr = localStorage.getItem('access_token');
+    if (tokenStr != null) {
+      try {
+        const bearerToken: any = jwtDecode(tokenStr);
+        return bearerToken.role;
+      } catch (err) {
+        return AppRoles.Guest;
+      }
+    }
+    return AppRoles.Guest;
   }
 }

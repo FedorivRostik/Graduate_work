@@ -6,4 +6,7 @@
   a.router-link-active {
     @apply text-gray-700;
   }
+  a.admin-panel-active {
+    @apply bg-slate-800/50;
+  }
 }

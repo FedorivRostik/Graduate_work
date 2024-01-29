@@ -14,9 +14,7 @@ export class LogInComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   submit() {
-    this.authService.login(this.loginRequest).subscribe((x) => {
-      console.log(x);
-      localStorage.setItem('access_token', x.resultObj?.token!);
+    this.authService.login(this.loginRequest).subscribe(() => {
       this.router.navigateByUrl('/home');
     });
   }

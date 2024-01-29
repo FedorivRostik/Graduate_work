@@ -7,6 +7,8 @@ import { LogInComponent } from './base/log-in/log-in.component';
 import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.component';
 import { CleanWrapperComponent } from './base/wrappers/clean-wrapper/clean-wrapper.component';
 import { ProductsComponent } from './pages/products/products/products.component';
+import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
+import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,11 @@ const routes: Routes = [
     children: [
       { path: 'sign-up', component: SignUpComponent },
       { path: 'log-in', component: LogInComponent },
+      {
+        path: 'admin-panel',
+        component: MainAdminPageComponent,
+        children: [{ path: 'products', component: AdminProductsComponent }],
+      },
     ],
   },
 ];
