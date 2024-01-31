@@ -1,5 +1,4 @@
 ﻿using Weather.Services.ProductApi.Dtos.Products;
-using Weather.Services.ProductApi.Models;
 
 namespace Weather.Services.ProductApi.Services.Interfaces;
 

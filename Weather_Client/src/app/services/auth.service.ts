@@ -26,6 +26,7 @@ export class AuthService {
         })
       );
   }
+
   register(
     registerRequest: RegisterRequest
   ): Observable<ResponseModel<boolean>> {
@@ -36,6 +37,7 @@ export class AuthService {
       )
       .pipe();
   }
+
   checkIfAuth(): boolean {
     return !!!localStorage.getItem('access_token');
   }

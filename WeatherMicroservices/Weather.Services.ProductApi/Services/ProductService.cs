@@ -23,6 +23,8 @@ public class ProductService : IProductService
 
     public async Task<ProductDto> AddProductAsync(ProductCreateDto productDto)
     {
+        await CheckGenre(productDto);
+
         var product = _mapper.Map<Product>(productDto);
         var result = (await _db.Products.AddAsync(product)).Entity;
         await _db.SaveChangesAsync();
@@ -34,9 +36,9 @@ public class ProductService : IProductService
     {
         var result = await _db.Products.FirstOrDefaultAsync(p => p.ProductId == id);
 
-        if (result is null) 
+        if (result is null)
         {
-            throw new  InvalidOperationException("cannot find");
+            throw new InvalidOperationException("cannot find");
         }
 
         _db.Products.Remove(result);
@@ -46,9 +48,9 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
     {
-        var result = await _db.Products.ToListAsync();
+        var result = await _db.Products.Include(x => x.Genre).ToListAsync();
 
-        return _mapper.Map<IEnumerable<ProductDto>>(result); 
+        return _mapper.Map<IEnumerable<ProductDto>>(result);
     }
 
     public async Task<ProductDto> GetByIdProductAsync(Guid id)
@@ -60,7 +62,7 @@ public class ProductService : IProductService
             throw new InvalidOperationException("cannot find");
         }
 
-        return _mapper.Map<ProductDto>(result); 
+        return _mapper.Map<ProductDto>(result);
     }
 
     public async Task<ProductDto> GetBySlugProductAsync(string slug)
@@ -88,6 +90,19 @@ public class ProductService : IProductService
 
         product = _db.Products?.Update(product)!.Entity;
         await _db.SaveChangesAsync();
-        return _mapper.Map<ProductDto>(result); 
+        return _mapper.Map<ProductDto>(result);
+    }
+
+    private async Task CheckGenre(ProductCreateDto productDto)
+    {
+        if (!string.IsNullOrEmpty(productDto.GenreId))
+        {
+            var genreId = Guid.Parse(productDto.GenreId);
+            var genre = await _db.Genres.FirstOrDefaultAsync(x => x.GenreId == genreId);
+            if (genre is null)
+            {
+                productDto.GenreId = default!;
+            }
+        }
     }
 }

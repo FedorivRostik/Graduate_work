@@ -1,6 +1,6 @@
 <div class="container flex min-w-full bg-gray-950/90 min-h-full">
   <div
-    class="bg-slate-700/60 border-r border-slate-800/40 p-2 min-w-[290px] flex flex-col shadow-lg shadow-slate-900/20 shadow-b-2 shadow-r-[3px] z-50"
+    class="bg-slate-700/60 border-r border-slate-800/40 p-2 flex flex-col shadow-lg shadow-slate-900/20 shadow-b-2 shadow-r-[3px] z-50"
   >
     <!-- Logo -->
     <a
@@ -40,6 +40,14 @@
             [routerLink]="['./products']"
             routerLinkActive="admin-panel-active"
             >Products
+          </a>
+        </li>
+        <li class="">
+          <a
+            class="px-4 py-3 flex hover:bg-slate-800/50 duration-200"
+            [routerLink]="['./genres']"
+            routerLinkActive="admin-panel-active"
+            >Genres
           </a>
         </li>
         <li class="">

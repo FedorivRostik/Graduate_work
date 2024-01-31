@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 #region Business Services
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 #endregion
 
 #region Cors

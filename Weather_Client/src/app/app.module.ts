@@ -14,15 +14,17 @@ import { LogInComponent } from './base/log-in/log-in.component';
 import { CleanWrapperComponent } from './base/wrappers/clean-wrapper/clean-wrapper.component';
 import { AllWrapperComponent } from './base/wrappers/all-wrapper/all-wrapper.component';
 import { ProductsComponent } from './pages/products/products/products.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwtInterceptor';
 import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
 import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
-import { AdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-product/admin-product.component';
 import { AdminUsersComponent } from './pages/admin_pages/main-admin-page/admin-users/admin-users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppDialogComponent } from './components/app-dialog/app-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AddAdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/add-admin-product/add-admin-product.component';
+import { AdminGenresComponent } from './pages/admin_pages/main-admin-page/admin-genres/admin-genres.component';
+import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admin-genres/add-admin-genre/add-admin-genre.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProductsComponent,
     MainAdminPageComponent,
     AdminProductsComponent,
-    AdminProductComponent,
     AdminUsersComponent,
     AppDialogComponent,
+    AddAdminProductComponent,
+    AdminGenresComponent,
+    AddAdminGenreComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

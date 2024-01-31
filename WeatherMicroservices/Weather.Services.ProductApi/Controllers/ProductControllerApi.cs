@@ -22,6 +22,7 @@ public class ProductControllerApi : ControllerBase
         _productService = productService;
     }
 
+    [Authorize(Roles = AppRoles.AdminRole)]
     [HttpPost]
     public async Task<IActionResult> CreateProductAsync([FromBody] ProductCreateDto productDto)
     {
@@ -38,7 +39,6 @@ public class ProductControllerApi : ControllerBase
 
         return Ok(ResponseDto.SetResult(result));
     }
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync()
     {

@@ -20,6 +20,8 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
 
         builder
             .ToTable(p => p.HasCheckConstraint("CK_Amount_GreaterThanZero", "Amount > 0"));
+        builder
+           .ToTable(p => p.HasCheckConstraint("CK_Discount_GreaterThanZero", "Discount > 0"));
 
         builder
             .Property(p => p.Name)
@@ -38,15 +40,15 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
            .IsRequired();
 
         builder
+        .Property(p => p.Discount)
+        .IsRequired(false);
+
+        builder
           .Property(p => p.Description)
           .IsRequired(false);
 
         builder
          .Property(p => p.CouponCode)
-         .IsRequired(false);
-
-        builder
-         .Property(p => p.GenreName)
          .IsRequired(false);
 
         builder

@@ -10,6 +10,9 @@ import { ProductsComponent } from './pages/products/products/products.component'
 import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
 import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
 import { AdminUsersComponent } from './pages/admin_pages/main-admin-page/admin-users/admin-users.component';
+import { AddAdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/add-admin-product/add-admin-product.component';
+import { AdminGenresComponent } from './pages/admin_pages/main-admin-page/admin-genres/admin-genres.component';
+import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admin-genres/add-admin-genre/add-admin-genre.component';
 
 const routes: Routes = [
   {
@@ -32,8 +35,11 @@ const routes: Routes = [
         path: 'admin-panel',
         component: MainAdminPageComponent,
         children: [
+          { path: 'products/add', component: AddAdminProductComponent },
           { path: 'products', component: AdminProductsComponent },
           { path: 'users', component: AdminUsersComponent },
+          { path: 'genres/add', component: AddAdminGenreComponent },
+          { path: 'genres', component: AdminGenresComponent },
         ],
       },
     ],

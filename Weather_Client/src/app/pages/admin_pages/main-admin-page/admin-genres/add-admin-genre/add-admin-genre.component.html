@@ -1,0 +1,48 @@
+<div class="flex flex-col gap-6">
+  <span class="text-gray-300 font-bold text-4xl">Add Genre </span>
+  <div class="bg-slate-700/60 border rounded-sm border-slate-700/80 p-4">
+    <form
+      [formGroup]="genreForm"
+      (submit)="onSubmit()"
+      class="max-w-sm mx-auto bg-gray-800 border-gray-700 border rounded-sm flex flex-col min-w-full px-6 p-4"
+    >
+      <div class="mb-5">
+        <label
+          for="name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="product one"
+          formControlName="name"
+          required
+        />
+        <span
+          *ngIf="
+            genreForm.controls.name.invalid && genreForm.controls.name.touched
+          "
+          class="font-medium mt-2 block text-sm text-red-500"
+          >Name is required</span
+        >
+      </div>
+
+      <button
+        type="submit"
+        class="duration-200 text-white cursor-pointer bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Submit
+      </button>
+    </form>
+    <button
+      type="button"
+      class="mt-2 text-white cursor-pointer duration-200 focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-gray-800 hover:bg-gray-700 focus:ring-gray-700 border-gray-700"
+      [routerLink]="['../']"
+      routerLinkActive="router-link-active"
+    >
+      Back
+    </button>
+  </div>
+</div>

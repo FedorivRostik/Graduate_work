@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-6">
-  <span class="text-gray-300 font-bold text-4xl"> Products </span>
+  <span class="text-gray-300 font-bold text-4xl"> Genres </span>
   <div class="bg-slate-700/60 border rounded-sm border-slate-700/80 p-4">
     <a
       type="button"
@@ -16,10 +16,8 @@
       >
         <thead class="text-xs uppercase bg-gray-700 text-gray-400">
           <tr>
-            <th scope="col" class="px-6 py-3">Product name</th>
-            <th scope="col" class="px-6 py-3">Slug</th>
-            <th scope="col" class="px-6 py-3">Category</th>
-            <th scope="col" class="px-6 py-3">Price</th>
+            <th scope="col" class="px-6 py-3">Genre name</th>
+
             <th scope="col" class="px-6 py-3">
               <span class="sr-only">Edit</span>
             </th>
@@ -27,7 +25,7 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let item of products"
+            *ngFor="let item of genres"
             class="border-b duration-200 bg-gray-800 border-gray-700 hover:bg-gray-600"
           >
             <th
@@ -36,9 +34,7 @@
             >
               {{ item.name }}
             </th>
-            <td class="px-6 py-4">{{ item.slug }}</td>
-            <td class="px-6 py-4">{{ item.genreName }}</td>
-            <td class="px-6 py-4">${{ item.price }}</td>
+
             <td class="px-6 py-4 text-right">
               <a href="#" class="font-medium text-blue-500 hover:underline"
                 >Edit</a
