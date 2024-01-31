@@ -19,6 +19,10 @@ import { JwtInterceptor } from './interceptors/jwtInterceptor';
 import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
 import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
 import { AdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-product/admin-product.component';
+import { AdminUsersComponent } from './pages/admin_pages/main-admin-page/admin-users/admin-users.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppDialogComponent } from './components/app-dialog/app-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -35,8 +39,17 @@ import { AdminProductComponent } from './pages/admin_pages/main-admin-page/admin
     MainAdminPageComponent,
     AdminProductsComponent,
     AdminProductComponent,
+    AdminUsersComponent,
+    AppDialogComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRouteModule, FormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRouteModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

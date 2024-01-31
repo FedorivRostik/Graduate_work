@@ -6,6 +6,7 @@ import { LoginResponse } from '../models/auth/loginResponse.model';
 import { LoginRequest } from '../models/auth/loginRequest.model';
 import { jwtDecode } from 'jwt-decode';
 import { AppRoles } from '../utilities/enums/appRoles.enums';
+import { RegisterRequest } from '../models/auth/registerRequest.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,14 +19,23 @@ export class AuthService {
         loginRequest
       )
       .pipe(
-        tap((response) => {
+        tap((response: any) => {
           localStorage.setItem('access_token', response.resultObj?.token!);
           localStorage.setItem('user_role', this.getUserRoleForLocalStorage());
           localStorage.setItem('user_id', this.getUserIdForLocalStorage());
         })
       );
   }
-
+  register(
+    registerRequest: RegisterRequest
+  ): Observable<ResponseModel<boolean>> {
+    return this.http
+      .post<ResponseModel<boolean>>(
+        'https://localhost:7001/api/auth/register',
+        registerRequest
+      )
+      .pipe();
+  }
   checkIfAuth(): boolean {
     return !!!localStorage.getItem('access_token');
   }

@@ -1,7 +1,6 @@
-export class User {
-  public userId!: string;
+export class RegisterRequest {
   public email!: string;
   public name!: string;
   public phoneNumber!: string;
-  public role!: string;
+  public password!: string;
 }

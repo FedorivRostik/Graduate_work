@@ -9,6 +9,7 @@ import { CleanWrapperComponent } from './base/wrappers/clean-wrapper/clean-wrapp
 import { ProductsComponent } from './pages/products/products/products.component';
 import { MainAdminPageComponent } from './pages/admin_pages/main-admin-page/main-admin-page.component';
 import { AdminProductsComponent } from './pages/admin_pages/main-admin-page/admin-products/admin-products.component';
+import { AdminUsersComponent } from './pages/admin_pages/main-admin-page/admin-users/admin-users.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,10 @@ const routes: Routes = [
       {
         path: 'admin-panel',
         component: MainAdminPageComponent,
-        children: [{ path: 'products', component: AdminProductsComponent }],
+        children: [
+          { path: 'products', component: AdminProductsComponent },
+          { path: 'users', component: AdminUsersComponent },
+        ],
       },
     ],
   },

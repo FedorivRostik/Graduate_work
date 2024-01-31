@@ -17,9 +17,10 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<IdentityRole>().HasData(
-            new IdentityRole() { Id= "2c5e174e-3b0e-446f-86af-483d56fd7210",Name = AppRoles.AdminRole, NormalizedName = AppRoles.AdminRole.ToUpper() }
-        );
+        builder.Entity<IdentityRole>().HasData([ 
+            new IdentityRole() { Id= "2c5e174e-3b0e-446f-86af-483d56fd7210",Name = AppRoles.AdminRole, NormalizedName = AppRoles.AdminRole.ToUpper() },
+            new IdentityRole() { Id= "2c5e174e-3b0e-446f-86af-483d56fd7211",Name = AppRoles.CustomerRole, NormalizedName = AppRoles.CustomerRole.ToUpper() }
+       ] );
         var hasher = new PasswordHasher<IdentityUser>();
 
 

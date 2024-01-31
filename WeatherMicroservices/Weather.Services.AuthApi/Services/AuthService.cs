@@ -32,7 +32,7 @@ public class AuthService : IAuthService
         var user = await _db.ApplicationUsers
             .FirstOrDefaultAsync(u => u.UserName!.ToLower() == loginRequestDto.UserName.ToLower());
 
-        if (user is null )
+        if (user is null)
         {
             throw new InvalidOperationException("Unvalid credentionals");
         }
@@ -63,7 +63,7 @@ public class AuthService : IAuthService
     {
         ApplicationUser user = new()
         {
-            UserName = registerRequestDto.Email,
+            UserName = registerRequestDto.Name,
             Email = registerRequestDto.Email,
             NormalizedEmail = registerRequestDto.Email.ToUpper(),
             Name = registerRequestDto.Name,
@@ -78,6 +78,12 @@ public class AuthService : IAuthService
             return false;
         }
 
+       var resultBool = await AssignRole(registerRequestDto.Email, registerRequestDto.Role!);
+
+        if (!resultBool)
+        {
+            return false;
+        }
         return true;
     }
 

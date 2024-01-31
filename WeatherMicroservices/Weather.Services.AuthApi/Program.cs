@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Business Services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 #endregion
 
