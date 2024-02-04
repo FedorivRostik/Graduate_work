@@ -88,6 +88,14 @@
         *ngIf="!isLogged"
         class="hidden items-center space-x-6 font-bold text-gray-500 duration-200 lg:flex"
       >
+        <a
+          [routerLink]="['/cart']"
+          routerLinkActive="router-link-active"
+          href="admin-panel"
+          class="text-gray-500 hover:text-gray-700 duration-200"
+          >Cart</a
+        >
+
         <span> welcome {{ userRole }} </span>
         <a
           [routerLink]="['/log-in']"

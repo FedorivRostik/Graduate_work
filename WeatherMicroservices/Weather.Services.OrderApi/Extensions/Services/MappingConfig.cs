@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Store.Services.CartApi.Dto;
+using Weather.Services.CartApi.Dtos.CartDetails;
+using Weather.Services.CartApi.Dtos.CartHeaders;
 using Weather.Services.CartApi.Models;
 
 namespace Weather.Services.CartApi.Extensioins;

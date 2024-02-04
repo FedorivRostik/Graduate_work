@@ -13,6 +13,7 @@ import { AdminUsersComponent } from './pages/admin_pages/main-admin-page/admin-u
 import { AddAdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/add-admin-product/add-admin-product.component';
 import { AdminGenresComponent } from './pages/admin_pages/main-admin-page/admin-genres/admin-genres.component';
 import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admin-genres/add-admin-genre/add-admin-genre.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'maps/radiation-map', component: RadiationMapComponent },
       { path: 'products/products', component: ProductsComponent },
+      { path: 'cart', component: CartComponent },
     ],
   },
   {

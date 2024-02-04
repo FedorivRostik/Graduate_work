@@ -1,6 +1,7 @@
-﻿using Weather.Services.CartApi.Dtos.Products;
+﻿using Weather.Services.CartApi.Dtos.CartHeaders;
+using Weather.Services.CartApi.Dtos.Products;
 
-namespace Store.Services.CartApi.Dto;
+namespace Weather.Services.CartApi.Dtos.CartDetails;
 
 public class CartDetailsDto
 {

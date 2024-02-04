@@ -1,4 +1,4 @@
-﻿namespace Store.Services.CartApi.Dto;
+﻿namespace Weather.Services.CartApi.Dtos.CartHeaders;
 
 public class CartAddHeaderDto
 {

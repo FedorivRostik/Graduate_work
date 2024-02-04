@@ -25,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddAdminProductComponent } from './pages/admin_pages/main-admin-page/admin-products/add-admin-product/add-admin-product.component';
 import { AdminGenresComponent } from './pages/admin_pages/main-admin-page/admin-genres/admin-genres.component';
 import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admin-genres/add-admin-genre/add-admin-genre.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admi
     AddAdminProductComponent,
     AdminGenresComponent,
     AddAdminGenreComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

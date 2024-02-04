@@ -1,8 +1,9 @@
-﻿using Store.Services.CartApi.Dto;
+﻿using Weather.Services.CartApi.Dtos.Carts;
 
 namespace Weather.Services.CartApi.Services.Interfaces;
 
 public interface ICartService
 {
-    Task<bool> UpsertCart(CartAddDto cartAddDto);
+    Task<bool> UpsertCartAsync(CartAddDto cartAddDto);
+    Task<CartResponseDto> GetCartAsync(string userId);
 }

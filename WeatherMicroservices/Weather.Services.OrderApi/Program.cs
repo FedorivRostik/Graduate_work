@@ -28,6 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 #region Business Services
 builder.Services.AddScoped<ICartService,CartService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 #endregion
 
 #region Cors

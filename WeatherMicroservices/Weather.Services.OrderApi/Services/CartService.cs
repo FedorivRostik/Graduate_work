@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Store.Services.CartApi.Dto;
 using Weather.Services.CartApi.Data;
+using Weather.Services.CartApi.Dtos.CartDetails;
+using Weather.Services.CartApi.Dtos.CartHeaders;
+using Weather.Services.CartApi.Dtos.Carts;
 using Weather.Services.CartApi.Models;
 using Weather.Services.CartApi.Services.Interfaces;
 
@@ -11,16 +13,47 @@ public class CartService : ICartService
 {
     private readonly AppDbContext _db;
     private readonly IMapper _mapper;
+    private readonly IProductService _productService;
 
 
     public CartService(AppDbContext db,
-        IMapper mapper)
+        IMapper mapper,
+        IProductService productService)
     {
         _db = db;
         _mapper = mapper;
+        _productService = productService;
     }
 
-    public async Task<bool> UpsertCart(CartAddDto cartDto)
+    public async Task<CartResponseDto> GetCartAsync(string userId)
+    {
+        CartResponseDto cart = new()
+        {
+            CartHeader = _mapper.Map<CartHeaderDto>(await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId.ToString())),
+        };
+        cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDto>>(await _db.CartDetails
+                .Where(u => u.CartHeaderId.ToString() == cart.CartHeader.CartHeaderId).ToListAsync());
+
+        var products = await _productService.GetProducts();
+        foreach (var item in cart.CartDetails)
+        {
+            item.ProductDto = products.FirstOrDefault(x => x.ProductId.ToString() == item.ProductId);
+            cart.CartHeader.CartTotal += (double)(item.Count * item.ProductDto.Price);
+        }
+
+        //if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+        //{
+        //    var coupon = await _couponService.GetCoupon(cart.CartHeader.CouponCode);
+        //    if (coupon != null && cart.CartHeader.CartTotal > coupon.MinAmount)
+        //    {
+        //        cart.CartHeader.CartTotal -= coupon.DiscountAmount;
+        //        cart.CartHeader.Discount = coupon.DiscountAmount;
+        //    }
+        //}
+        return cart;
+    }
+
+    public async Task<bool> UpsertCartAsync(CartAddDto cartDto)
     {
         var cartHeaderFromDb = await _db.CartHeaders
            .AsNoTracking()
