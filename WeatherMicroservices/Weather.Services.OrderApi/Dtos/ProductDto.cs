@@ -7,6 +7,7 @@ public class ProductDto
     public string? Slug { get; set; }
     public int Amount { get; set; }
     public decimal Price { get; set; }
+    public int? Discount { get; set; }
     public string? Description { get; set; }
     public string? CouponCode { get; set; }
     public string? GenreName { get; set; }

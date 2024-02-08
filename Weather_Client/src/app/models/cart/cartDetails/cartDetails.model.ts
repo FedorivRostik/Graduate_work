@@ -8,4 +8,6 @@ export class CartDetails {
   productId!: string;
   productDto!: Product;
   count!: number;
+  price!: number;
+  discount?: number;
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CartDetails } from 'src/app/models/cart/cartDetails/cartDetails.model';
+import { CartUpdateDetails } from 'src/app/models/cart/cartDetails/cartUpdateDetails.model';
 import { Cart } from 'src/app/models/cart/carts/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
   cart!: Cart;
@@ -16,5 +17,62 @@ export class CartComponent implements OnInit {
     this.cartService
       .getCart()
       .subscribe((x) => (this.cart = <Cart>x.resultObj));
+  }
+
+  onIncrementDetails(count: number): number {
+    return ++count;
+  }
+
+  onDecrementDetails(count: number): number {
+    return --count;
+  }
+
+  onUpdateDetails(
+    cartDetails: CartDetails,
+    countChange: (count: number) => number
+  ) {
+    const cartUpdateDetails: CartUpdateDetails = Object.assign(
+      new CartUpdateDetails(),
+      cartDetails
+    );
+
+    cartUpdateDetails.count = countChange(cartUpdateDetails.count);
+    this.cartService.updateDetails(cartUpdateDetails).subscribe((x) => {
+      if (x.isSuccess) {
+        const updatedDetails = <CartUpdateDetails>x.resultObj;
+        const updatedIndex = this.cart.cartDetails.findIndex(
+          (x) => x.cartDetailsId === updatedDetails.cartDetailsId
+        );
+        this.cart.cartDetails[updatedIndex].count = updatedDetails.count;
+        this.updateCartTotal();
+      }
+    });
+  }
+
+  onDeleteDetails(cartDetailsId: string) {
+    const cartUpdateDetails: CartUpdateDetails = new CartUpdateDetails();
+    cartUpdateDetails.cartDetailsId = cartDetailsId;
+    this.cartService.deleteDetails(cartUpdateDetails).subscribe((x) => {
+      if (x.isSuccess) {
+        const deletedIndex = this.cart.cartDetails.findIndex(
+          (d) => d.cartDetailsId == cartDetailsId
+        );
+        if (deletedIndex > -1) {
+          this.cart.cartDetails.splice(deletedIndex, 1);
+          this.updateCartTotal();
+        }
+      }
+    });
+  }
+
+  private updateCartTotal() {
+    console.log(this.cart.cartDetails);
+    this.cart.cartHeader.cartTotal = +this.cart.cartDetails
+      .reduce((partialSum, a) => partialSum + a.price * a.count, 0)
+      .toFixed(2);
+    console.log(this.cart.cartHeader.cartTotal);
+    this.cart.cartHeader.discount = +this.cart.cartDetails
+      .reduce((partialSum, a) => partialSum + <number>a.discount * a.count, 0)
+      .toFixed(2);
   }
 }

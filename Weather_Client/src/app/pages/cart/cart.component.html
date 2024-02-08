@@ -1,4 +1,4 @@
-<section class="py-12 sm:py-16 lg:py-10">
+<section class="py-12 sm:py-16 lg:py-10" *ngIf="cart">
   <div class="mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-center">
       <h1 class="text-2xl font-semibold text-gray-900">Your Cart</h1>
@@ -38,7 +38,7 @@
                       <p
                         class="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right"
                       >
-                        $ {{ item.productDto.price }}
+                        $ {{ item.productDto.price.toFixed(2) }}
                       </p>
 
                       <div class="sm:order-1">
@@ -46,7 +46,9 @@
                           class="mx-auto flex h-8 items-stretch text-gray-600"
                         >
                           <button
+                            (click)="onUpdateDetails(item, onDecrementDetails)"
                             class="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-black hover:text-white"
+                            [disabled]="item.count <= 1"
                           >
                             -
                           </button>
@@ -56,6 +58,7 @@
                             {{ item.count }}
                           </div>
                           <button
+                            (click)="onUpdateDetails(item, onIncrementDetails)"
                             class="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-black hover:text-white"
                           >
                             +
@@ -69,6 +72,7 @@
                     class="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto"
                   >
                     <button
+                      (click)="onDeleteDetails(item.cartDetailsId)"
                       type="button"
                       class="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
                     >
@@ -98,13 +102,17 @@
             <div class="flex items-center justify-between">
               <p class="text-sm text-gray-400">Subtotal</p>
               <p class="text-lg font-semibold text-gray-900">
-                ${{ cart.cartHeader.cartTotal! + cart.cartHeader.discount! }}
+                ${{
+                  (
+                    cart.cartHeader.cartTotal! + cart.cartHeader.discount!
+                  ).toFixed(2)
+                }}
               </p>
             </div>
             <div class="flex items-center justify-between">
-              <p class="text-sm text-gray-400">discount</p>
+              <p class="text-sm text-gray-400">Discount</p>
               <p class="text-lg font-semibold text-gray-900">
-                ${{ cart.cartHeader.discount }}
+                ${{ cart.cartHeader.discount?.toFixed(2) }}
               </p>
             </div>
           </div>
@@ -112,7 +120,7 @@
             <p class="text-sm font-medium text-gray-900">Total</p>
             <p class="text-2xl font-semibold text-gray-900">
               <span class="text-xs font-normal text-gray-400">USD</span>
-              {{ cart.cartHeader.cartTotal }}
+              {{ cart.cartHeader.cartTotal?.toFixed(2) }}
             </p>
           </div>
 
@@ -140,6 +148,14 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 sm:py-16 lg:py-10" *ngIf="!!!cart">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-center">
+      <h1 class="text-2xl font-semibold text-gray-900">Add items to cart</h1>
     </div>
   </div>
 </section>

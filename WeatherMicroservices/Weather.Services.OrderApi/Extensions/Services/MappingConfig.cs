@@ -14,9 +14,12 @@ public static class MappingConfig
         {
             config.CreateMap<CartHeaderDto, CartHeader>().ReverseMap();
             config.CreateMap<CartDetailsDto, CartDetail>().ReverseMap();
-
+        
             config.CreateMap<CartAddHeaderDto, CartHeader>().ReverseMap();
             config.CreateMap<CartAddDetailsDto, CartDetail>().ReverseMap();
+
+            config.CreateMap<CartUpdateDetailsDto, CartDetail>().ReverseMap();
+
         });
 
         return mappingConfig;

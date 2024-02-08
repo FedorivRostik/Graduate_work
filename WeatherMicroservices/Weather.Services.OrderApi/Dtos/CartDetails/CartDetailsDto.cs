@@ -10,5 +10,7 @@ public class CartDetailsDto
     public CartHeaderDto? CartHeader { get; set; }
     public string ProductId { get; set; } = default!;
     public ProductDto? ProductDto { get; set; }
+    public decimal Price { get; set; }
+    public int? Discount { get; set; }
     public int Count { get; set; }
 }

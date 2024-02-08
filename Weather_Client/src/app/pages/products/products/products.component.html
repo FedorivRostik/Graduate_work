@@ -23,11 +23,13 @@
         </a>
 
         <div class="flex items-center justify-between">
-          <p>
+          <p class="flex flex-col-reverse">
             <span class="text-3xl font-bold text-slate-900"
-              >${{ item.price }}</span
+              >${{ item.price.toFixed(2) }}</span
             >
-            <!-- <span class="text-sm text-slate-900 line-through">$299</span> -->
+            <!-- <span class="text-xs text-slate-900 line-through text-end" -->
+            <!-- >$299</span -->
+            <!-- > -->
           </p>
           <button
             (click)="onAddToCart(item.productId)"
