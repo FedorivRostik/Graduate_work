@@ -20,6 +20,8 @@ public static class MappingConfig
 
             config.CreateMap<CartUpdateDetailsDto, CartDetail>().ReverseMap();
 
+            config.CreateMap<CartUpdateHeaderStatusDto, CartDetail>().ReverseMap();
+
         });
 
         return mappingConfig;

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartDetails } from 'src/app/models/cart/cartDetails/cartDetails.model';
 import { CartUpdateDetails } from 'src/app/models/cart/cartDetails/cartUpdateDetails.model';
+import { CartUpdateHeaderStatus } from 'src/app/models/cart/cartHeaders/cartUpdateHeaderStatus.model';
 import { Cart } from 'src/app/models/cart/carts/cart.model';
 import { CartService } from 'src/app/services/cart.service';
+import { CartStatusesEnum } from 'src/app/utilities/enums/cartStatuses.enum';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +14,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
   cart!: Cart;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartService
@@ -61,6 +64,19 @@ export class CartComponent implements OnInit {
           this.cart.cartDetails.splice(deletedIndex, 1);
           this.updateCartTotal();
         }
+      }
+    });
+  }
+
+  onCheckout() {
+    const cartheaderStatus: CartUpdateHeaderStatus = Object.assign(
+      new CartUpdateHeaderStatus(),
+      this.cart.cartHeader,
+      { status: CartStatusesEnum.StatusPending }
+    );
+    this.cartService.updateHeaderStatus(cartheaderStatus).subscribe((x) => {
+      if (x.isSuccess) {
+        this.router.navigateByUrl('/orders');
       }
     });
   }

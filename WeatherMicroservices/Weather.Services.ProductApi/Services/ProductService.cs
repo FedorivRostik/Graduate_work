@@ -48,7 +48,9 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
     {
-        var result = await _db.Products.Include(x => x.Genre).ToListAsync();
+        var result = await _db.Products.Include(x => x.Genre)
+            .AsNoTracking()
+            .ToListAsync();
 
         return _mapper.Map<IEnumerable<ProductDto>>(result);
     }

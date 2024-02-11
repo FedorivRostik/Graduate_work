@@ -1,0 +1,97 @@
+<div
+  class="mx-auto border border-slate-200 duration-200 rounded-md shadow-sm hover:shadow-md flex flex-col max-w-3xl px-6 p-4 gap-4"
+>
+  <form [formGroup]="infoForm" (submit)="onSubmit()" class="">
+    <div class="mb-5">
+      <label
+        for="email"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['email'].invalid &&
+          infoForm.controls['email'].touched
+        "
+        >Email</label
+      >
+      <input
+        type="text"
+        id="email"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="email@email.com"
+        formControlName="email"
+        [class.border-red-500]="
+          infoForm.controls['email'].invalid &&
+          infoForm.controls['email'].touched
+        "
+        required
+      />
+      <span
+        [class]="getErrorClasses('email')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Email is required
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="address"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['address'].invalid &&
+          infoForm.controls['address'].touched
+        "
+        >Address</label
+      >
+      <input
+        type="text"
+        id="address"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678"
+        formControlName="address"
+        [class.border-red-500]="
+          infoForm.controls['address'].invalid &&
+          infoForm.controls['address'].touched
+        "
+        required
+      />
+      <span
+        [class]="getErrorClasses('address')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Address is required
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="phone"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['phone'].invalid &&
+          infoForm.controls['phone'].touched
+        "
+        >Phone</label
+      >
+      <input
+        type="text"
+        id="phone"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="+38012345678"
+        formControlName="phone"
+        [class.border-red-500]="
+          infoForm.controls['phone'].invalid &&
+          infoForm.controls['phone'].touched
+        "
+        required
+      />
+      <span
+        [class]="getErrorClasses('phone')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Phone is required
+      </span>
+    </div>
+    <button
+      class="border-2 border-indigo-400 text-indigo-400 hover:bg-indigo-400 hover:text-white hover:border-indigo-50 duration-200 px-5 py-2 rounded-md"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+  <div [innerHTML]="safeHtml"></div>
+</div>

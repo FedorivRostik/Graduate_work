@@ -1,0 +1,246 @@
+<div class="flex flex-col gap-3" *ngIf="carts.length > 0">
+  <p class="text-3xl font-semibold">Orders:</p>
+  <div class="flex flex-col mb-5">
+    <p class="text-lg font-medium mb-5">Open carts:</p>
+    <div
+      *ngFor="let item of openCarts"
+      class="shadow rounded-md border-slate-300 flex flex-col hover:shadow-lg duration-200"
+    >
+      <div class="p-6 flex flex-col gap-4">
+        <div class="flex justify-between">
+          <div class="flex gap-6">
+            <span class="font-medium flex flex-col gap-2"
+              >Order number
+              <span class="font-light text-gray-500"
+                >#{{ item.cartHeader.cartHeaderId }}</span
+              ></span
+            >
+            <span class="font-medium flex flex-col gap-2"
+              >Date placed
+              <span class="font-light text-gray-500">12/07/2023</span></span
+            >
+            <span class="font-medium flex flex-col gap-2"
+              >Total
+              <span class="font-light text-gray-500"
+                >${{ item.cartHeader.cartTotal?.toFixed(2) }}</span
+              ></span
+            >
+            <div>
+              <button
+                class="flex items-center justify-around border-indigo-400 text-indigo-600 rounded-md border px-3 py-1 hover:bg-indigo-400 hover:text-white duration-200"
+                (click)="onUpdateStatus(item, cartStatusesEnum.StatusPending)"
+              >
+                <img
+                  src="/assets/svgs/cart_page/checkout.svg"
+                  alt=""
+                  class="h-4"
+                /><span class="ml-1 text-xs font-medium"> Checkout </span>
+              </button>
+            </div>
+          </div>
+
+          <span class="font-normal text-xs text-gray-500 flex items-center"
+            ><span
+              class="text-xs text-gray-500 px-3 py-1 rounded-md border-2 shadow-sm"
+              [class]="getStatusClasses(item.cartHeader.status)"
+            >
+              {{ item.cartHeader.status }}
+            </span></span
+          >
+        </div>
+      </div>
+      <hr />
+      <div class="p-6 flex flex-col gap-4">
+        <div class="relative overflow-x-auto sm:rounded-lg">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Price</th>
+                <th scope="col" class="px-6 py-3">Amount</th>
+                <th scope="col" class="px-6 py-3">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="bg-white border-b last:border-none hover:bg-gray-50 duration-200"
+                *ngFor="let details of item.cartDetails"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
+                >
+                  <img
+                    class="w-10 h-10 rounded-full"
+                    [src]="
+                      details.productDto.imageUrl
+                        ? details.productDto.imageUrl
+                        : [
+                            'https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'
+                          ]
+                    "
+                    [alt]="details.productDto.name"
+                  />
+                  <div class="ps-3">
+                    <div class="text-base font-semibold">
+                      {{ details.productDto.name }}
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">${{ details.price.toFixed(2) }}</td>
+                <td class="px-6 py-4">{{ details.count }}</td>
+                <td class="px-6 py-4">
+                  ${{ (details.price * details.count).toFixed(2) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-6">
+    <p class="text-lg font-medium mb-5">Other orders:</p>
+    <div
+      *ngFor="let item of otherCarts"
+      class="shadow rounded-md border-slate-300 flex flex-col hover:shadow-lg duration-200"
+    >
+      <div class="p-6 flex flex-col gap-4">
+        <div class="flex justify-between">
+          <div class="flex gap-6">
+            <span class="font-medium flex flex-col gap-2"
+              >Order number
+              <span class="font-light text-gray-500"
+                >#{{ item.cartHeader.cartHeaderId }}</span
+              ></span
+            >
+            <span class="font-medium flex flex-col gap-2"
+              >Date placed
+              <span class="font-light text-gray-500">12/07/2023</span></span
+            >
+            <span class="font-medium flex flex-col gap-2"
+              >Total
+              <span class="font-light text-gray-500"
+                >${{ item.cartHeader.cartTotal?.toFixed(2) }}</span
+              ></span
+            >
+            <span
+              class="font-medium flex flex-col gap-2"
+              *ngIf="item.cartHeader.email"
+              >Email
+              <span class="font-light text-gray-500">{{
+                item.cartHeader.email
+              }}</span></span
+            >
+            <span
+              class="font-medium flex flex-col gap-2"
+              *ngIf="item.cartHeader.address"
+              >Address
+              <span class="font-light text-gray-500">{{
+                item.cartHeader.address
+              }}</span></span
+            >
+            <span
+              class="font-medium flex flex-col gap-2"
+              *ngIf="item.cartHeader.phone"
+              >Phone
+              <span class="font-light text-gray-500">{{
+                item.cartHeader.phone
+              }}</span></span
+            >
+            <div class="flex gap-2">
+              <div>
+                <button
+                  class="border-green-400 text-green-600 rounded-md border px-3 py-1 hover:bg-green-400 hover:text-white duration-200"
+                  (click)="onPay(item)"
+                  *ngIf="
+                    item.cartHeader.status !== cartStatusesEnum.StatusCancelled
+                  "
+                >
+                  💵<span class="text-xs font-medium"> Pay </span>
+                </button>
+              </div>
+              <div>
+                <button
+                  class="border-red-400 text-red-600 rounded-md border px-3 py-1 hover:bg-red-400 hover:text-white duration-200"
+                  (click)="
+                    onUpdateStatus(item, cartStatusesEnum.StatusCancelled)
+                  "
+                  *ngIf="
+                    item.cartHeader.status !== cartStatusesEnum.StatusCancelled
+                  "
+                >
+                  ❌<span class="text-xs font-medium"> Cancell </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <span class="font-normal text-xs text-gray-500 flex items-center"
+            ><span
+              class="text-xs text-gray-500 px-3 py-1 rounded-md border-2 shadow-sm"
+              [class]="getStatusClasses(item.cartHeader.status)"
+            >
+              {{ item.cartHeader.status }}
+            </span></span
+          >
+        </div>
+      </div>
+      <hr />
+      <div class="p-6 flex flex-col gap-4">
+        <div class="relative overflow-x-auto sm:rounded-lg">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Price</th>
+                <th scope="col" class="px-6 py-3">Amount</th>
+                <th scope="col" class="px-6 py-3">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="bg-white border-b last:border-none hover:bg-gray-50 duration-200"
+                *ngFor="let details of item.cartDetails"
+              >
+                <th
+                  scope="row"
+                  class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
+                >
+                  <img
+                    class="w-10 h-10 rounded-full"
+                    [src]="
+                      details.productDto.imageUrl
+                        ? details.productDto.imageUrl
+                        : [
+                            'https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60'
+                          ]
+                    "
+                    [alt]="details.productDto.name"
+                  />
+                  <div class="ps-3">
+                    <div class="text-base font-semibold">
+                      {{ details.productDto.name }}
+                    </div>
+                  </div>
+                </th>
+                <td class="px-6 py-4">${{ details.price.toFixed(2) }}</td>
+                <td class="px-6 py-4">{{ details.count }}</td>
+                <td class="px-6 py-4">
+                  ${{ (details.price * details.count).toFixed(2) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="py-12 sm:py-16 lg:py-10" *ngIf="!(carts.length > 0)">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-center">
+      <h1 class="text-2xl font-semibold text-gray-900">Create order or cart</h1>
+    </div>
+  </div>
+</section>

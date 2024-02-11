@@ -17,7 +17,11 @@ namespace Weather.Services.CartApi.Migrations
                 {
                     CartHeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CouponCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CouponCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "Open"),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

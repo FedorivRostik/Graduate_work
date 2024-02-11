@@ -54,9 +54,7 @@
           <a href="#" class="text-gray-500 hover:text-gray-700 duration-200"
             >About</a
           >
-          <a href="#" class="text-gray-500 hover:text-gray-700 duration-200"
-            >About</a
-          >
+
           <a
             *ngIf="onRole(appRoles.Admin)"
             href="admin-panel"
@@ -95,7 +93,13 @@
           class="text-gray-500 hover:text-gray-700 duration-200"
           >Cart</a
         >
-
+        <a
+          [routerLink]="['/orders']"
+          routerLinkActive="router-link-active"
+          href="admin-panel"
+          class="text-gray-500 hover:text-gray-700 duration-200"
+          >Orders</a
+        >
         <span> welcome {{ userRole }} </span>
         <a
           [routerLink]="['/log-in']"

@@ -1,14 +1,15 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Weather.Services.CartApi.Dtos;
-using Weather.Services.CartApi.Dtos.Extensions;
-using Weather.Services.CartApi.Models;
-using Weather.Services.CartApi.Data;
-using Weather.Services.CartApi.Services.Interfaces;
-using Weather.Services.CartApi.Dtos.Carts;
-using Microsoft.AspNetCore.Authorization;
 using Weather.Services.CartApi.Dtos.CartDetails;
+using Weather.Services.CartApi.Dtos.CartHeaders;
+using Weather.Services.CartApi.Dtos.Carts;
+using Weather.Services.CartApi.Dtos.Extensions;
+using Weather.Services.CartApi.Dtos.LiqPay;
+using Weather.Services.CartApi.Services.Interfaces;
+using Weather.Services.CartApi.Utilities.Helpers;
 
 namespace Weather.Services.CartApi.Controllers;
 [Route("api/carts")]
@@ -16,11 +17,14 @@ namespace Weather.Services.CartApi.Controllers;
 public class CartController : ControllerBase
 {
     private readonly ICartService _cartService;
+    private readonly LiqPayHelper _liqPayHelper;
     private ResponseDto ResponseDto { get; set; } = new();
     public CartController(
-        ICartService cartService)
+        ICartService cartService,
+        LiqPayHelper liqPayHelper)
     {
         _cartService = cartService;
+        _liqPayHelper = liqPayHelper;
     }
 
     [Authorize]
@@ -52,6 +56,46 @@ public class CartController : ControllerBase
     public async Task<ActionResult<CartResponseDto>> DeleteDetailsCountAsync([FromBody] CartDeleteDetailsDto cartUpdateDetailsDto)
     {
         var result = await _cartService.DeleteDetailsAsync(cartUpdateDetailsDto.CartDetailsId!);
+        return Ok(ResponseDto.SetResult(result));
+    }
+
+    [Authorize]
+    [HttpPost("updateStatus")]
+    public async Task<ActionResult<CartResponseDto>> UpdateStatusAsync([FromBody] CartUpdateHeaderStatusDto cartUpdateHeaderStatusDto)
+    {
+        var result = await _cartService.UpdateCartHeaderStatusAsync(cartUpdateHeaderStatusDto);
+        return Ok(ResponseDto.SetResult(result));
+    }
+
+    [Authorize]
+    [HttpGet("userOrders")]
+    public async Task<ActionResult<CartResponseDto>> GetUserOrders()
+    {
+       var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+        var result = await _cartService.GetUserOrders(userId);
+        return Ok(ResponseDto.SetResult(result));
+    }
+
+    [Authorize]
+    [HttpPost("liqpayData")]
+    public IActionResult GetLiqPayData([FromBody] LiqPayCreateDto liqPayCreateDto)
+    {
+        return Ok(ResponseDto.SetResult(_liqPayHelper.GetLiqPayModel(Convert.ToString(liqPayCreateDto.OrderId), liqPayCreateDto.Amount)));
+    }
+
+    [Authorize]
+    [HttpGet("GetCartHeader/{headerId}")]
+    public async Task<IActionResult> GetCartHeader([FromRoute] string headerId)
+    {
+        var result = await _cartService.GetCartHeaderAsync(headerId);
+        return Ok(ResponseDto.SetResult(result));
+    }
+
+    [Authorize]
+    [HttpPost("cartUpdateShippmentInfo")]
+    public async Task<IActionResult >CartUpdateShippmentInfoAsync([FromBody] HeaderUpdateShippmentInfoDto cartUpdateShippmentInfoDto)
+    {
+        var result = await _cartService.CartUpdateShippmentInfoAsync(cartUpdateShippmentInfoDto);
         return Ok(ResponseDto.SetResult(result));
     }
 }

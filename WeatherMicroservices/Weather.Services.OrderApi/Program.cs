@@ -6,6 +6,7 @@ using Weather.Services.CartApi.Extensions.Middlewares;
 using Weather.Services.CartApi.Services;
 using Weather.Services.CartApi.Services.Interfaces;
 using Weather.Services.CartApi.Utilities.ClientHandlers;
+using Weather.Services.CartApi.Utilities.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,10 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 #region Business Services
 builder.Services.AddScoped<ICartService,CartService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+#endregion
+
+#region Helpers
+builder.Services.AddSingleton<LiqPayHelper>();
 #endregion
 
 #region Cors

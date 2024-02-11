@@ -6,6 +6,7 @@ using Weather.Services.CartApi.Dtos.CartHeaders;
 using Weather.Services.CartApi.Dtos.Carts;
 using Weather.Services.CartApi.Models;
 using Weather.Services.CartApi.Services.Interfaces;
+using Weather.Services.CartApi.Utilities.Constants;
 
 namespace Weather.Services.CartApi.Services;
 
@@ -14,7 +15,6 @@ public class CartService : ICartService
     private readonly AppDbContext _db;
     private readonly IMapper _mapper;
     private readonly IProductService _productService;
-
 
     public CartService(AppDbContext db,
         IMapper mapper,
@@ -25,11 +25,23 @@ public class CartService : ICartService
         _productService = productService;
     }
 
+    public async Task<bool> CartUpdateShippmentInfoAsync(HeaderUpdateShippmentInfoDto cartUpdateShippmentInfoDto)
+    {
+        var headerId = Guid.Parse(cartUpdateShippmentInfoDto.CartHeaderId);
+        var header = await _db.CartHeaders.AsNoTracking().FirstAsync(x => x.CartHeaderId == headerId);
+
+        header.UpdateShippingInfo(cartUpdateShippmentInfoDto.Address, cartUpdateShippmentInfoDto.Email, cartUpdateShippmentInfoDto.Phone);
+       
+        _db.Update(header);
+        await _db.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<bool> DeleteDetailsAsync(string cartDetailsId)
     {
-      var detail =  await _db.CartDetails
-           .AsNoTracking()
-           .FirstAsync(x => x.CartDetailsId.ToString() == cartDetailsId);
+        var detail = await _db.CartDetails
+             .AsNoTracking()
+             .FirstAsync(x => x.CartDetailsId.ToString() == cartDetailsId);
 
         _db.Remove(detail);
         _db.SaveChanges();
@@ -38,20 +50,22 @@ public class CartService : ICartService
 
     public async Task<CartResponseDto> GetCartAsync(string userId)
     {
+        var products = await _productService.GetProducts();
+
         CartResponseDto cart = new()
         {
-            CartHeader = _mapper.Map<CartHeaderDto>(await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId.ToString())),
+            CartHeader = _mapper.Map<CartHeaderDto>(await _db.CartHeaders.FirstOrDefaultAsync(u => u.UserId == userId.ToString()
+            && u.Status == CartStatuses.StatusOpen)),
         };
         cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDto>>(await _db.CartDetails
                 .Where(u => u.CartHeaderId.ToString() == cart.CartHeader.CartHeaderId).ToListAsync());
 
-        var products = await _productService.GetProducts();
         foreach (var item in cart.CartDetails)
         {
             var product = products.FirstOrDefault(x => x.ProductId.ToString() == item.ProductId);
             item.ProductDto = product;
             item.Price = product.Price;
-            item.Discount= product.Discount;
+            item.Discount = product.Discount;
             cart.CartHeader.CartTotal += (double)(item.Count * item.ProductDto.Price);
         }
 
@@ -67,15 +81,70 @@ public class CartService : ICartService
         return cart;
     }
 
+    public async Task<CartHeaderDto> GetCartHeaderAsync(string headerId)
+    {
+        return _mapper.Map<CartHeaderDto>(await _db.CartHeaders.FirstOrDefaultAsync(u => u.CartHeaderId.ToString() == headerId));
+    }
+
+    public async Task<IEnumerable<CartResponseDto>> GetUserOrders(string userId)
+    {
+        var products = await _productService.GetProducts();
+
+        var userCartHeaders = await _db.CartHeaders
+            .Where(h => h.UserId == userId)
+            .ToListAsync();
+
+        var cartResponses = new List<CartResponseDto>();
+
+        foreach (var h in userCartHeaders)
+        {
+            var cartHeader = _mapper.Map<CartHeaderDto>(h);
+            var cartDetails = _mapper.Map<IEnumerable<CartDetailsDto>>(
+                await _db.CartDetails
+                    .Where(u => u.CartHeaderId.ToString() == cartHeader.CartHeaderId)
+                    .ToListAsync()
+            );
+
+            foreach (var item in cartDetails)
+            {
+                var product = products.FirstOrDefault(x => x.ProductId.ToString() == item.ProductId);
+                item.ProductDto = product;
+                item.Price = product.Price;
+                item.Discount = product.Discount;
+                cartHeader.CartTotal += (double)(item.Count * item.ProductDto.Price);
+            }
+
+            cartResponses.Add(new CartResponseDto
+            {
+                CartHeader = cartHeader,
+                CartDetails = cartDetails
+            });
+        }
+
+        return cartResponses;
+
+    }
+
+    public async Task<bool> UpdateCartHeaderStatusAsync(CartUpdateHeaderStatusDto cartUpdateHeaderStatusDto)
+    {
+        var cartHeaderId = Guid.Parse(cartUpdateHeaderStatusDto.CartHeaderId);
+        var cartHeader = await _db.CartHeaders.FirstOrDefaultAsync(x => x.CartHeaderId == cartHeaderId);
+
+        cartHeader.Status = cartUpdateHeaderStatusDto.Status;
+        _db.Update(cartHeader);
+        await _db.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<CartUpdateDetailsDto> UpdateDetailsAsync(CartUpdateDetailsDto cartUpdateDetailsDto)
     {
-         await _db.CartDetails
-            .AsNoTracking()
-            .FirstAsync(x => x.CartDetailsId.ToString() == cartUpdateDetailsDto.CartDetailsId);
+        await _db.CartDetails
+           .AsNoTracking()
+           .FirstAsync(x => x.CartDetailsId.ToString() == cartUpdateDetailsDto.CartDetailsId);
 
         var updatedDetail = _mapper.Map<CartDetail>(cartUpdateDetailsDto);
 
-        if (updatedDetail.Count<=0)
+        if (updatedDetail.Count <= 0)
         {
             throw new ArgumentException("Amount of product cannot be smaller or equal to 0");
         }
@@ -90,7 +159,8 @@ public class CartService : ICartService
     {
         var cartHeaderFromDb = await _db.CartHeaders
            .AsNoTracking()
-           .FirstOrDefaultAsync(u => u.UserId == cartDto.CartHeader.UserId);
+           .FirstOrDefaultAsync(u => u.UserId == cartDto.CartHeader.UserId
+           && u.Status == CartStatuses.StatusOpen);
 
         if (cartHeaderFromDb == null)
         {

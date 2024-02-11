@@ -26,6 +26,8 @@ import { AddAdminProductComponent } from './pages/admin_pages/main-admin-page/ad
 import { AdminGenresComponent } from './pages/admin_pages/main-admin-page/admin-genres/admin-genres.component';
 import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admin-genres/add-admin-genre/add-admin-genre.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { PayComponent } from './pages/pay/pay.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { CartComponent } from './pages/cart/cart.component';
     AdminGenresComponent,
     AddAdminGenreComponent,
     CartComponent,
+    OrdersComponent,
+    PayComponent,
   ],
   imports: [
     BrowserModule,
