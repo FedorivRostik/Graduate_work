@@ -16,6 +16,7 @@ import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admi
 import { CartComponent } from './pages/cart/cart.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { PayComponent } from './pages/pay/pay.component';
+import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'products/products', component: ProductsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: 'pay/redirect', component: PaymentRedirectComponent },
       { path: 'pay', component: PayComponent },
     ],
   },

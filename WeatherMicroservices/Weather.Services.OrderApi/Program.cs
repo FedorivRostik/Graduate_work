@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Weather.Services.CartApi.Data;
 using Weather.Services.CartApi.Extensioins;
 using Weather.Services.CartApi.Extensions.Middlewares;
+using Weather.Services.CartApi.Helpers;
 using Weather.Services.CartApi.Services;
 using Weather.Services.CartApi.Services.Interfaces;
 using Weather.Services.CartApi.Utilities.ClientHandlers;
-using Weather.Services.CartApi.Utilities.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 

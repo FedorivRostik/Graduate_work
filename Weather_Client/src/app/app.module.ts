@@ -28,6 +28,7 @@ import { AddAdminGenreComponent } from './pages/admin_pages/main-admin-page/admi
 import { CartComponent } from './pages/cart/cart.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { PayComponent } from './pages/pay/pay.component';
+import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PayComponent } from './pages/pay/pay.component';
     CartComponent,
     OrdersComponent,
     PayComponent,
+    PaymentRedirectComponent,
   ],
   imports: [
     BrowserModule,

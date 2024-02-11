@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Weather.Services.CartApi.Data;
 using Weather.Services.CartApi.Dtos.CartDetails;
 using Weather.Services.CartApi.Dtos.CartHeaders;
 using Weather.Services.CartApi.Dtos.Carts;
+using Weather.Services.CartApi.Dtos.LiqPay;
+using Weather.Services.CartApi.Helpers;
 using Weather.Services.CartApi.Models;
 using Weather.Services.CartApi.Services.Interfaces;
 using Weather.Services.CartApi.Utilities.Constants;
@@ -15,14 +19,20 @@ public class CartService : ICartService
     private readonly AppDbContext _db;
     private readonly IMapper _mapper;
     private readonly IProductService _productService;
+    private readonly IHttpClientFactory _clientFactory;
+    private readonly LiqPayHelper _liqPayHelper;
 
     public CartService(AppDbContext db,
         IMapper mapper,
-        IProductService productService)
+        IProductService productService,
+        IHttpClientFactory clientFactory,
+        LiqPayHelper liqPayHelper)
     {
         _db = db;
         _mapper = mapper;
         _productService = productService;
+        _clientFactory = clientFactory;
+        _liqPayHelper = liqPayHelper;
     }
 
     public async Task<bool> CartUpdateShippmentInfoAsync(HeaderUpdateShippmentInfoDto cartUpdateShippmentInfoDto)
@@ -31,10 +41,47 @@ public class CartService : ICartService
         var header = await _db.CartHeaders.AsNoTracking().FirstAsync(x => x.CartHeaderId == headerId);
 
         header.UpdateShippingInfo(cartUpdateShippmentInfoDto.Address, cartUpdateShippmentInfoDto.Email, cartUpdateShippmentInfoDto.Phone);
-       
+
         _db.Update(header);
         await _db.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<bool> CheckPayedCartStatusAsync(string cartHeaderId)
+    {
+
+        var liqPayModel = _liqPayHelper.GetLiqPayModelStatus(cartHeaderId);
+        HttpClient client = _clientFactory.CreateClient("LiqPay");
+        HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "https://www.liqpay.ua/api/request");
+
+        var data = new Dictionary<string, string>
+        {
+            { "data", liqPayModel.Data },
+            { "signature", liqPayModel.Signature }
+        };
+
+        message.Content = new FormUrlEncodedContent(data);
+
+        HttpResponseMessage response = await client.SendAsync(message);
+
+        var apiContent = await response.Content.ReadAsStringAsync();
+        var responseDto = JsonConvert.DeserializeObject<LiqPayResponse>(apiContent);
+
+        if (responseDto.status == "success")
+        {
+            var orderHeaderResult = await _db.CartHeaders.FirstAsync(x => x.CartHeaderId.ToString() == cartHeaderId);
+            if (orderHeaderResult is not null)
+            {
+                orderHeaderResult.Status = CartStatuses.StatusPayed;
+                _db.Update(orderHeaderResult);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
     public async Task<bool> DeleteDetailsAsync(string cartDetailsId)

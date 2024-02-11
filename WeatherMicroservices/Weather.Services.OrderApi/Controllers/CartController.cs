@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Weather.Services.CartApi.Dtos;
 using Weather.Services.CartApi.Dtos.CartDetails;
@@ -8,8 +7,8 @@ using Weather.Services.CartApi.Dtos.CartHeaders;
 using Weather.Services.CartApi.Dtos.Carts;
 using Weather.Services.CartApi.Dtos.Extensions;
 using Weather.Services.CartApi.Dtos.LiqPay;
+using Weather.Services.CartApi.Helpers;
 using Weather.Services.CartApi.Services.Interfaces;
-using Weather.Services.CartApi.Utilities.Helpers;
 
 namespace Weather.Services.CartApi.Controllers;
 [Route("api/carts")]
@@ -96,6 +95,14 @@ public class CartController : ControllerBase
     public async Task<IActionResult >CartUpdateShippmentInfoAsync([FromBody] HeaderUpdateShippmentInfoDto cartUpdateShippmentInfoDto)
     {
         var result = await _cartService.CartUpdateShippmentInfoAsync(cartUpdateShippmentInfoDto);
+        return Ok(ResponseDto.SetResult(result));
+    }
+
+    [Authorize]
+    [HttpPost("checkStatus")]
+    public async Task<IActionResult> CheckPayedCartStatusAsync([FromBody] LiqPayCheckStatusDto liqPayCheckStatusDto)
+    {
+        var result = await _cartService.CheckPayedCartStatusAsync(liqPayCheckStatusDto.CartHeaderId);
         return Ok(ResponseDto.SetResult(result));
     }
 }

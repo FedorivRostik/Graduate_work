@@ -14,4 +14,5 @@ public interface ICartService
     Task<bool> DeleteDetailsAsync(string cartDetailsId);
     Task<bool> CartUpdateShippmentInfoAsync(HeaderUpdateShippmentInfoDto cartUpdateShippmentInfoDto);
     Task<CartHeaderDto> GetCartHeaderAsync(string headerId);
+    Task<bool> CheckPayedCartStatusAsync(string cartHeaderId);
 }

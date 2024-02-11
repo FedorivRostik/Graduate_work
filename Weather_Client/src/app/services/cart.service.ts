@@ -12,6 +12,7 @@ import { liqPayCheckoutForm } from '../models/LiqPay/liqPayCheckoutForm.model';
 import { LiqPayCreate as LiqPayCreateDto } from '../models/LiqPay/liqPayCreate.model';
 import { HeaderUpdateShippmentInfoDto } from '../models/cart/carts/cartUpdateShippmentInfo.model';
 import { CartHeader } from '../models/cart/cartHeaders/cartHeader.model';
+import { LiqPayCheckStatus } from '../models/LiqPay/liqPayCheckStatus.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -98,12 +99,21 @@ export class CartService {
       LiqPayCreateDto
     );
   }
+
   getCartHeader(): Observable<ResponseModel<CartHeader>> {
     return this.http.get(
       'https://localhost:7002/api/carts/GetCartHeader/' +
         localStorage.getItem('orderHeaderId_to_pay')!
     );
   }
+
+  checkStatus(): Observable<ResponseModel<boolean>> {
+    const cartHeaderId = localStorage.getItem('orderHeaderId_to_pay')!;
+    const dto: LiqPayCheckStatus = new LiqPayCheckStatus();
+    dto.cartHeaderId = cartHeaderId;
+    return this.http.post('https://localhost:7002/api/carts/checkStatus', dto);
+  }
+
   private getCreateLiqPay(): LiqPayCreateDto {
     const liqPayCreate: LiqPayCreateDto = new LiqPayCreateDto();
     liqPayCreate.orderId = localStorage.getItem('orderHeaderId_to_pay')!;

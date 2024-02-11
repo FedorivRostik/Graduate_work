@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Weather.Services.CartApi.Dtos.LiqPay;
 
-namespace Weather.Services.CartApi.Utilities.Helpers;
+namespace Weather.Services.CartApi.Helpers;
 
 public class LiqPayHelper
 {
@@ -34,7 +34,7 @@ public class LiqPayHelper
             description = "Оплата замовлення",
             order_id = order_id,
 
-            result_url = "https://localhost:4200/Pay/Redirect/"+order_id,
+            result_url = "http://localhost:4200/pay/redirect",
 
         };
         var json_string = JsonConvert.SerializeObject(signature_source);
@@ -48,7 +48,7 @@ public class LiqPayHelper
         return model;
     }
 
-     public LiqPayCheckoutFormModel GetLiqPayModelStatus(int order_id)
+     public LiqPayCheckoutFormModel GetLiqPayModelStatus(string order_id)
     {
         // Заповнюю дані для їх передачі для LiqPay
         var signature_source = new LiqPayCheckout()
@@ -56,7 +56,7 @@ public class LiqPayHelper
             action = "status",
             version = 3,
             public_key = _public_key,
-            order_id = Convert.ToString(order_id),
+            order_id = order_id,
 
         };
         var json_string = JsonConvert.SerializeObject(signature_source);
