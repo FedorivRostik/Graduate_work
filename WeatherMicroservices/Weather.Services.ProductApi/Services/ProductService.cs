@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weather.Services.ProductApi.Data;
+using Weather.Services.ProductApi.Data.Repositories.Interfaces;
 using Weather.Services.ProductApi.Dtos.Products;
 using Weather.Services.ProductApi.Models;
 using Weather.Services.ProductApi.Services.Interfaces;
@@ -11,19 +12,27 @@ public class ProductService : IProductService
 {
     private readonly AppDbContext _db;
     private readonly IMapper _mapper;
+    private readonly IPictureRepository _pictureRepository;
 
     public ProductService(
         AppDbContext db,
-        IMapper mapper)
+        IMapper mapper,
+        IPictureRepository pictureRepository)
     {
         _db = db;
         _mapper = mapper;
+        _pictureRepository = pictureRepository;
     }
 
 
     public async Task<ProductDto> AddProductAsync(ProductCreateDto productDto)
     {
         await CheckGenre(productDto);
+
+        if (!string.IsNullOrEmpty(productDto.ImageUrl))
+        {
+            productDto.ImageUrl = await _pictureRepository.UploadAsync(productDto.ImageUrl, productDto.Slug);
+        }
 
         var product = _mapper.Map<Product>(productDto);
         var result = (await _db.Products.AddAsync(product)).Entity;

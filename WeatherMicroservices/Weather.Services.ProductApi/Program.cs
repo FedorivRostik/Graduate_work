@@ -1,6 +1,9 @@
 using AutoMapper;
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using Weather.Services.ProductApi.Data;
+using Weather.Services.ProductApi.Data.Repositories;
+using Weather.Services.ProductApi.Data.Repositories.Interfaces;
 using Weather.Services.ProductApi.Extensioins;
 using Weather.Services.ProductApi.Extensions.Middlewares;
 using Weather.Services.ProductApi.Services;
@@ -15,6 +18,14 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+#endregion
+
+#region Data
+builder.Services.AddScoped<IPictureRepository, PictureRepository>();
+#endregion
+
+#region Azure
+builder.Services.AddScoped(_ => new BlobServiceClient(builder.Configuration.GetConnectionString("BlobConnection")));
 #endregion
 
 #region Business Services

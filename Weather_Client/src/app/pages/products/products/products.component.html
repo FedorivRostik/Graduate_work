@@ -6,9 +6,13 @@
     >
       <a href="#">
         <img
-          class="h-60 rounded-t-lg object-cover"
-          src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt="product image"
+          class="h-60 rounded-t-lg object-cover min-w-full"
+          [src]="
+            item.imageUrl
+              ? item.imageUrl
+              : ['assets/images/products/_default.jpg']
+          "
+          [alt]="item.name"
         />
       </a>
       <!-- <span

@@ -14,6 +14,8 @@ import { Location } from '@angular/common';
 export class AddAdminProductComponent implements OnInit {
   genres: Genre[] = [];
   createProduct!: ProductCreate;
+  imageUrl?: string;
+
   productForm = new FormGroup({
     name: new FormControl('', Validators.required),
     slug: new FormControl('', Validators.required),
@@ -21,9 +23,9 @@ export class AddAdminProductComponent implements OnInit {
     price: new FormControl('', Validators.required),
     discount: new FormControl('', Validators.nullValidator),
     description: new FormControl('', Validators.nullValidator),
-    imageUrl: new FormControl('', Validators.nullValidator),
     genreId: new FormControl('', Validators.nullValidator),
   });
+
   constructor(
     private productService: ProductService,
     private genreService: GenreService,
@@ -43,11 +45,26 @@ export class AddAdminProductComponent implements OnInit {
     if (this.productForm.valid) {
       const productToCreate: ProductCreate = Object.assign(
         new ProductCreate(),
-        this.productForm.value
+        this.productForm.value,
+        { imageUrl: this.imageUrl }
       );
       this.productService
         .addProduct(productToCreate)
         .subscribe(() => this._location.back());
+    }
+  }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const baseString64 = reader.result as string;
+      this.imageUrl = baseString64;
+      console.log(baseString64);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
     }
   }
 }
