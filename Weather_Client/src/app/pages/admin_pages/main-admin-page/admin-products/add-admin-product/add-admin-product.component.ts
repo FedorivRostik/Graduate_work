@@ -53,6 +53,7 @@ export class AddAdminProductComponent implements OnInit {
         .subscribe(() => this._location.back());
     }
   }
+
   onFileChange(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();

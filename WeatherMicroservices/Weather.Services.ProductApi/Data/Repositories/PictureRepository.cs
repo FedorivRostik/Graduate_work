@@ -56,7 +56,7 @@ public class PictureRepository : IPictureRepository
         var blobClient = blobContainer.GetBlobClient(fileName);
         var blobTags = new Dictionary<string, string>
         {
-            { "game_alias", alias }
+            { "product_alias", alias }
         };
 
         blobClient.SetTags(blobTags);
