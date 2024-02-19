@@ -55,6 +55,24 @@ public class ProductService : IProductService
         return _mapper.Map<ProductDto>(result);
     }
 
+    public async Task<IEnumerable< ProductDto>> GetRandomTwoByCategory(string gerneName)
+    {
+        var result = await _db.Products
+            .Include(x=>x.Genre)
+            .Where(p => p.Genre!.Name.ToLower()==gerneName.ToLower())
+            .OrderBy(x => x.ProductId)
+            .Take(2)
+            .ToListAsync();
+
+        if (result is null)
+        {
+            throw new InvalidOperationException("cannot find");
+        }
+
+        await _db.SaveChangesAsync();
+        return _mapper.Map<IEnumerable<ProductDto>>(result);
+    }
+
     public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
     {
         var result = await _db.Products.Include(x => x.Genre)

@@ -29,6 +29,8 @@ import { CartComponent } from './pages/cart/cart.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { PayComponent } from './pages/pay/pay.component';
 import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
+import { CommonModule } from '@angular/common';
+import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiation-info/get-radiation-info.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redir
     OrdersComponent,
     PayComponent,
     PaymentRedirectComponent,
+    GetRadiationInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redir
     BrowserAnimationsModule,
     MatDialogModule,
     ReactiveFormsModule,
+    CommonModule,
   ],
   providers: [
     {

@@ -10,5 +10,6 @@ public interface IProductService
     Task<ProductDto> GetBySlugProductAsync(string slug);
     Task<ProductDto> GetByIdProductAsync(Guid id);
     Task<ProductDto> DeleteByIdSlugProductAsync(Guid id);
+    Task<IEnumerable<ProductDto>> GetRandomTwoByCategory(string gerneName);
 
 }

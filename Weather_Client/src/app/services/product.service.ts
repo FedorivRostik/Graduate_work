@@ -17,6 +17,14 @@ export class ProductService {
       .pipe();
   }
 
+  getProductsRadiation(): Observable<ResponseModel<Product[]>> {
+    return this.http
+      .get<ResponseModel<Product[]>>(
+        'https://localhost:7000/api/products/category/radiation'
+      )
+      .pipe();
+  }
+
   addProduct(productCreate: ProductCreate) {
     return this.http
       .post<ResponseModel<Product>>(

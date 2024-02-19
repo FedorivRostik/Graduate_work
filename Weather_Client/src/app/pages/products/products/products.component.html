@@ -31,15 +31,17 @@
         <div class="flex items-center justify-between">
           <div class="flex flex-col-reverse" *ngIf="item.discount">
             <div class="text-2xl font-bold text-slate-900">
-              ${{ item.price - (item.price / 100) * item.discount! }}
+              ${{
+                (item.price - (item.price / 100) * item.discount!).toFixed(2)
+              }}
             </div>
             <span class="text-xs text-slate-900 line-through text-end"
-              >${{ item.price }}</span
+              >${{ item.price.toFixed(2) }}</span
             >
           </div>
           <div class="flex flex-col-reverse" *ngIf="!!!item.discount">
             <div class="text-2xl font-bold text-slate-900">
-              ${{ item.price }}
+              ${{ item.price.toFixed(2) }}
             </div>
           </div>
           <button

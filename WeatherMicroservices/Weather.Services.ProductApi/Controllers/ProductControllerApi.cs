@@ -62,4 +62,11 @@ public class ProductControllerApi : ControllerBase
 
         return Ok(ResponseDto.SetResult(result));
     }
+    [HttpGet("category/{category}")]
+    public async Task<IActionResult> GetByCategoryProductAsync([FromRoute] string category)
+    {
+        var result = await _productService.GetRandomTwoByCategory(category);
+
+        return Ok(ResponseDto.SetResult(result));
+    }
 }

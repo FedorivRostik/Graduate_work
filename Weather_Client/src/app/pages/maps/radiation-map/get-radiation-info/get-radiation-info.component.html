@@ -1,0 +1,159 @@
+<div *ngIf="isReady" class="h-full p-3">
+  <div class="flex flex-col h-4/6 overflow-scroll">
+    <span class="text-green-700 text-2xl"
+      >Рівень випромінювання: {{ radiationValue }} мкЗв/год</span
+    >
+
+    <section class="leading-loose mt-5 flex flex-col gap-y-3">
+      <span class="text-gray-800 text-lg">Опис:</span>
+      <div *ngIf="+radiationValue < 0.3" class="leading-loose text-gray-600">
+        0,3 мкЗв/год: Безпечний рівень для людини. Не очікується жодних
+        негативних наслідків.
+      </div>
+
+      <div
+        *ngIf="+radiationValue >= 0.3 && +radiationValue <= 1"
+        class="leading-loose text-gray-600"
+      >
+        <span class="font-semibold"
+          >Рівень опромінення, який потребує моніторингу</span
+        >. Незначний ризик виникнення негативних наслідків. Рекомендується вжити
+        заходів для зниження опромінення.
+      </div>
+      <div
+        *ngIf="+radiationValue > 1 && +radiationValue < 5"
+        class="leading-loose text-gray-600"
+      >
+        <span class="font-semibold">
+          Рівень опромінення, який потребує обережності. Помірний ризик
+          виникнення негативних наслідків</span
+        >. Рекомендується вжити заходів для значного зниження опромінення.
+      </div>
+      <div
+        *ngIf="+radiationValue >= 5 && +radiationValue <= 10"
+        class="leading-loose text-gray-600"
+      >
+        <span class="font-semibold">
+          Рівень опромінення, який потребує значного обмеження. Високий ризик
+          виникнення негативних наслідків</span
+        >. Рекомендується вжити заходів для максимального зниження опромінення.
+      </div>
+      <div *ngIf="+radiationValue > 10" class="leading-loose text-gray-600">
+        <span class="font-semibold"> Небезпечний рівень опромінення</span>. Дуже
+        високий ризик виникнення серйозних негативних наслідків. Рекомендується
+        евакуюватися з зони опромінення.
+      </div>
+      <div *ngIf="+radiationValue >= 0.3" class="leading-loose text-gray-600">
+        <span class="font-semibold">Наслідки опромінення</span>: Гостре
+        променеве ураження: Виникає при короткочасному опроміненні високими
+        дозами радіації. Симптоми: нудота, блювота, діарея, випадіння волосся,
+        втрата ваги, смерть. Хронічне променеве ураження: Виникає при тривалому
+        опроміненні низькими дозами радіації.
+        <span class="font-semibold">Симптоми</span>: рак, лейкемія, катаракта,
+        безпліддя, порушення розвитку у дітей.
+      </div>
+      <div
+        *ngIf="+radiationValue >= 0.3"
+        class="leading-loose text-gray-600 mt-1"
+      >
+        <span class="font-semibold"> Як боротися з опроміненням:</span>
+        <ul class="max-w-md space-y-1 list-disc list-inside">
+          <li>
+            Знизити час опромінення: Провести якомога менше часу в зоні
+            опромінення.
+          </li>
+          <li>
+            Збільшити відстань від джерела опромінення: Чим далі ви знаходитесь
+            від джерела опромінення, тим менше ви опромінюєтесь.
+          </li>
+          <li>
+            Використовувати захисні бар'єри: Захисні екрани, щити та одяг можуть
+            допомогти зменшити опромінення.
+          </li>
+          <li>
+            Приймати йод: Прийом йоду може допомогти захистити щитовидну залозу
+            від опромінення.
+          </li>
+          <li>
+            Дотримуватися інструкцій влади: У разі аварії на атомній
+            електростанції важливо дотримуватися інструкцій влади.
+          </li>
+        </ul>
+        Важливо зазначити, що ризик виникнення негативних наслідків опромінення
+        залежить від багатьох факторів. Якщо ви стурбовані тим, що ви могли
+        піддатися опроміненню, зверніться до лікаря.
+      </div>
+    </section>
+  </div>
+  <div class="flex flex-col h-2/6 mt-2">
+    <div class="grid grid-cols-2 gap-x-3">
+      <div
+        class="relative w-full max-w-xs overflow-hidden rounded-lg bg-white shadow-md hover:scale-105 duration-300"
+        *ngFor="let item of products"
+      >
+        <a href="#">
+          <img
+            class="rounded-t-lg object-cover min-w-full max-h-32"
+            [src]="
+              item.imageUrl
+                ? item.imageUrl
+                : ['assets/images/products/_default.jpg']
+            "
+            [alt]="item.name"
+          />
+        </a>
+        <span
+          *ngIf="item.discount"
+          class="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white"
+          >Sale</span
+        >
+
+        <div class="p-1 flex flex-col justify-between">
+          <a href="#">
+            <h5 class="text font-semibold tracking-tight text-slate-900">
+              {{ item.name }}
+            </h5>
+          </a>
+
+          <div class="flex items-center flex-col justify-between">
+            <div class="flex" *ngIf="item.discount">
+              <div class="text-md font-bold text-slate-900">
+                ${{
+                  (item.price - (item.price / 100) * item.discount!).toFixed(2)
+                }}
+              </div>
+              <span class="text-xs text-slate-900 line-through text-end"
+                >${{ item.price.toFixed(2) }}</span
+              >
+            </div>
+            <div class="flex flex-col-reverse" *ngIf="!!!item.discount">
+              <div class="text-md font-bold text-slate-900">
+                ${{ item.price.toFixed(2) }}
+              </div>
+            </div>
+            <button
+              (click)="onAddToCart(item.productId)"
+              class="flex hover:text-indigo-500 duration-300 items-center rounded-md border bg-indigo-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-white focus:outline-none focus:ring-4 focus:ring-blue-300 active:opacity-70"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="mr-2 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              Add to cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
