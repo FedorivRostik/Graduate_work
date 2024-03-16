@@ -25,6 +25,8 @@ public class NuclearService : INuclearService
 
     public async Task<NuclearResponseDto> GenerateCityAsync(string city)
     {
+       
+
         string fullText = string.Empty!;
         var regex = new Regex($@"\*\*Місто:\*\*\s*(.+)\s+\*\*Рівень радіації:\*\*\s+([\d.]+)");
         var match = regex.Match(fullText);
@@ -102,6 +104,22 @@ public class NuclearService : INuclearService
 
     public async Task<NuclearResponseDto> GenerateDistrictAsync(string district)
     {
+        if (string.Equals(district, "Херсонська область", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return new() { City = district, Value = "0.5" };
+        }
+        if (string.Equals(district, "Запорізька область", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return new() { City = district, Value = "1.1" };
+        }
+        if (string.Equals(district, "Донецька область", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return new() { City = district, Value = "5.05" };
+        }
+        if (string.Equals(district, "Луганська область", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return new() { City = district, Value = "10.11" };
+        }
         string fullText = string.Empty!;
         var regex = new Regex($@"\*\*Область:\*\*\s*(.+)\s+\*\*Рівень радіації:\*\*\s+([\d.]+)");
         var match = regex.Match(fullText);
@@ -133,6 +151,11 @@ public class NuclearService : INuclearService
 
             match = regex.Match(fullText);
         
+        }
+
+        if (match.Groups[2].Value == "0")
+        {
+            return new() { City = district, Value = "0.1" };
         }
         return new() { City = district, Value = match.Groups[2].Value };
     }

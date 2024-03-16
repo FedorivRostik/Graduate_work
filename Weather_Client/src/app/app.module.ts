@@ -31,6 +31,8 @@ import { PayComponent } from './pages/pay/pay.component';
 import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
 import { CommonModule } from '@angular/common';
 import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiation-info/get-radiation-info.component';
+import { AirMapComponent } from './pages/maps/air-map/air-map.component';
+import { GetAirInfoComponent } from './pages/maps/air-map/get-air-info/get-air-info.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiat
     PayComponent,
     PaymentRedirectComponent,
     GetRadiationInfoComponent,
+    AirMapComponent,
+    GetAirInfoComponent,
   ],
   imports: [
     BrowserModule,

@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /WeatherMicroservices/Weather.Services.ProductApi/appsettings.json
 /WeatherMicroservices/Weather.Services.AuthApi/appsettings.json
 /WeatherMicroservices/Weather.Services.NuclearApi/appsettings.json
+/WeatherMicroservices/Weather.Services.AirPolutionApi/appsettings.json

@@ -17,9 +17,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   templateUrl: './radiation-map.component.html',
   styleUrls: ['./radiation-map.component.css'],
 })
-export class RadiationMapComponent
-  implements AfterViewInit, OnInit, AfterContentInit
-{
+export class RadiationMapComponent implements AfterViewInit, AfterContentInit {
   geojsonData: any;
   map!: Map;
   safeHtml!: SafeHtml;
@@ -33,44 +31,53 @@ export class RadiationMapComponent
 
   ngAfterViewInit(): void {}
 
-  ngOnInit(): void {
-    this.map = new Map('map').setView([48.21, 31.1], 6);
-    tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
-    const geoJsonFileNames = [
-      'UA_05_Vinnytska.geojson',
-      'UA_07_Volynska.geojson',
-      'UA_09_Luhanska.geojson',
-      'UA_12_Dnipropetrovska.geojson',
-      'UA_14_Donetska.geojson',
-      'UA_18_Zhytomyrska.geojson',
-      'UA_21_Zakarpatska.geojson',
-      'UA_23_Zaporizka.geojson',
-      'UA_26_Ivano_Frankivska.geojson',
-      'UA_32_Kyivska.geojson',
-      'UA_35_Kirovohradska.geojson',
-      'UA_43_Avtonomna_Respublika_Krym.geojson',
-      'UA_46_Lvivska.geojson',
-      'UA_48_Mykolaivska.geojson',
-      'UA_51_Odeska.geojson',
-      'UA_53_Poltavska.geojson',
-      'UA_56_Rivnenska.geojson',
-      'UA_59_Sumska.geojson',
-      'UA_61_Ternopilska.geojson',
-      'UA_63_Kharkivska.geojson',
-      'UA_65_Khersonska.geojson',
-      'UA_68_Khmelnytska.geojson',
-      'UA_71_Cherkaska.geojson',
-      'UA_74_Chernihivska.geojson',
-      'UA_77_Chernivetska.geojson',
-    ];
-    const geoJsonsFiles: any[] = [];
+  ngDoCheck(): void {
+    if (!this.map) {
+      this.map = new Map('map', {
+        scrollWheelZoom: false, // Disable scroll zoom
+        dragging: false, // Disable dragging
+        doubleClickZoom: false,
+      }).setView([48.21, 31.1], 6);
+      tileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+        {
+          attribution:
+            'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+        }
+      ).addTo(this.map);
+      const geoJsonFileNames = [
+        'UA_05_Vinnytska.geojson',
+        'UA_07_Volynska.geojson',
+        'UA_09_Luhanska.geojson',
+        'UA_12_Dnipropetrovska.geojson',
+        'UA_14_Donetska.geojson',
+        'UA_18_Zhytomyrska.geojson',
+        'UA_21_Zakarpatska.geojson',
+        'UA_23_Zaporizka.geojson',
+        'UA_26_Ivano_Frankivska.geojson',
+        'UA_32_Kyivska.geojson',
+        'UA_35_Kirovohradska.geojson',
+        'UA_43_Avtonomna_Respublika_Krym.geojson',
+        'UA_46_Lvivska.geojson',
+        'UA_48_Mykolaivska.geojson',
+        'UA_51_Odeska.geojson',
+        'UA_53_Poltavska.geojson',
+        'UA_56_Rivnenska.geojson',
+        'UA_59_Sumska.geojson',
+        'UA_61_Ternopilska.geojson',
+        'UA_63_Kharkivska.geojson',
+        'UA_65_Khersonska.geojson',
+        'UA_68_Khmelnytska.geojson',
+        'UA_71_Cherkaska.geojson',
+        'UA_74_Chernihivska.geojson',
+        'UA_77_Chernivetska.geojson',
+      ];
+      const geoJsonsFiles: any[] = [];
 
-    geoJsonFileNames.forEach((fileName) => {
-      geoJsonsFiles.push(this.readAndAddGeoJson(fileName));
-    });
+      geoJsonFileNames.forEach((fileName) => {
+        geoJsonsFiles.push(this.readAndAddGeoJson(fileName));
+      });
+    }
   }
 
   private readAndAddGeoJson(fileName: string): any {
@@ -92,7 +99,9 @@ export class RadiationMapComponent
             this.addPopUpData(geojsonData);
             geoJSON(geojsonData, {
               style: (feature: any) => {
-                return this.addStyleToGEOJSON(feature);
+                return this.addStyleToGEOJSON(
+                  geojsonData.properties.radiatinValue
+                );
               },
               onEachFeature: (feature: any, layer: any) =>
                 this.onEachFeature(feature, layer),
@@ -121,10 +130,30 @@ export class RadiationMapComponent
       layer.bindPopup(feature.properties.popupContent);
     }
   }
-  private addStyleToGEOJSON(feature: any): { color: string } {
-    if (feature.properties.isOcupated) {
+  private addStyleToGEOJSON(radiationValue: number): { color: string } {
+    if (radiationValue < 0.3) {
       return {
-        color: '#ff0000',
+        color: '	#44ce1b',
+      };
+    }
+    if (radiationValue >= 0.3 && +radiationValue <= 1) {
+      return {
+        color: '	#bbdb44',
+      };
+    }
+    if (+radiationValue > 1 && +radiationValue < 5) {
+      return {
+        color: '	#f7e379',
+      };
+    }
+    if (+radiationValue >= 5 && +radiationValue <= 10) {
+      return {
+        color: '	#f2a134',
+      };
+    }
+    if (+radiationValue > 10) {
+      return {
+        color: '	#e51f1f',
       };
     }
     return {

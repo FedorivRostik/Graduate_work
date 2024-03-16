@@ -18,6 +18,7 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { PayComponent } from './pages/pay/pay.component';
 import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
 import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiation-info/get-radiation-info.component';
+import { AirMapComponent } from './pages/maps/air-map/air-map.component';
 
 const routes: Routes = [
   {
@@ -26,11 +27,18 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: '', component: HomeComponent },
+
       {
         path: 'maps/radiation-map',
         component: RadiationMapComponent,
         children: [{ path: ':value', component: GetRadiationInfoComponent }],
       },
+      {
+        path: 'maps/air-map',
+        component: AirMapComponent,
+        children: [{ path: ':value', component: GetRadiationInfoComponent }],
+      },
+
       { path: 'products/products', component: ProductsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'orders', component: OrdersComponent },

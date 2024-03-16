@@ -9,7 +9,16 @@
   a.admin-panel-active {
     @apply bg-slate-800/50;
   }
+  a.map-link-active {
+    @apply bg-green-800/90;
+  }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
