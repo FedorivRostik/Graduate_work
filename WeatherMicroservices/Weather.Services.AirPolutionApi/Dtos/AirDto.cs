@@ -8,13 +8,13 @@ public class Coord
 
 public class Main
 {
-    public int aqi { get; set; }
+    public double aqi { get; set; }
 }
 
 public class Components
 {
     public double co { get; set; }
-    public int no { get; set; }
+    public double no { get; set; }
     public double no2 { get; set; }
     public double o3 { get; set; }
     public double so2 { get; set; }
@@ -27,7 +27,7 @@ public class List
 {
     public Main main { get; set; }
     public Components components { get; set; }
-    public int dt { get; set; }
+    public double dt { get; set; }
 }
 
 public class AirPollutionData
