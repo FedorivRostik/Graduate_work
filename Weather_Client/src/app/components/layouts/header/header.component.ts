@@ -10,6 +10,7 @@ import { AppRoles } from 'src/app/utilities/enums/appRoles.enums';
 export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
   userRole!: AppRoles;
+  userName!: string;
   public appRoles: typeof AppRoles;
 
   constructor(private authService: AuthService) {
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isLogged = this.authService.checkIfAuth();
     this.userRole = this.authService.getUserRole();
+    this.userName = this.authService.getUserName();
   }
 
   onLogOut(): void {

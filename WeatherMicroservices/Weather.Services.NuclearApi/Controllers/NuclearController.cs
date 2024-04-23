@@ -29,7 +29,16 @@ public class NuclearController : ControllerBase
     [HttpGet("disctrict/{disctrict}")]
     public async Task<ActionResult<ResponseDto>> GetValueByDisctrictAsync([FromRoute] string disctrict)
     {
+        try
+        {
+
         var result = await _nuclearService.GenerateDistrictAsync(disctrict);
         return Ok(ResponseDto.SetResult(result));
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 }

@@ -1,0 +1,277 @@
+<div
+  class="mx-auto border border-slate-200 duration-200 rounded-md shadow-sm hover:shadow-md flex flex-col max-w-3xl px-6 p-4 gap-4"
+>
+  <form [formGroup]="infoForm" (submit)="onSubmit()">
+    <div class="mb-5">
+      <label
+        for="weight"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['weight'].invalid &&
+          infoForm.controls['weight'].touched
+        "
+        >Маса в кг</label
+      >
+      <input
+        type="number"
+        id="weight"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="64.7"
+        formControlName="weight"
+        [class.border-red-500]="
+          infoForm.controls['weight'].invalid &&
+          infoForm.controls['weight'].touched
+        "
+        [step]="0.1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('weight')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="age"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['age'].invalid && infoForm.controls['age'].touched
+        "
+        >Вік</label
+      >
+      <input
+        type="number"
+        id="age"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="18"
+        formControlName="age"
+        [class.border-red-500]="
+          infoForm.controls['age'].invalid && infoForm.controls['age'].touched
+        "
+        [step]="1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('age')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="region"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['region'].invalid &&
+          infoForm.controls['region'].touched
+        "
+        >Область</label
+      >
+      <select
+        id="region"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        formControlName="region"
+        [class.border-red-500]="
+          infoForm.controls['region'].invalid &&
+          infoForm.controls['region'].touched
+        "
+        [value]="districts[0]"
+      >
+        <option *ngFor="let item of districts" [value]="item">
+          {{ item }}
+        </option>
+      </select>
+
+      <span
+        [class]="getErrorClasses('region')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Область треба вказати
+      </span>
+    </div>
+
+    <div class="mb-5">
+      <label
+        for="city"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['city'].invalid && infoForm.controls['city'].touched
+        "
+        >Місто</label
+      >
+      <select
+        id="city"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        formControlName="city"
+        [class.border-red-500]="
+          infoForm.controls['city'].invalid && infoForm.controls['city'].touched
+        "
+        [value]="cities[0].name"
+      >
+        <option *ngFor="let item of cities" [value]="item.name">
+          {{ item.name }}
+        </option>
+      </select>
+
+      <span
+        [class]="getErrorClasses('city')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Місто треба вказати
+      </span>
+    </div>
+
+    <div class="mb-5">
+      <label
+        for="pressure"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['pressure'].invalid &&
+          infoForm.controls['pressure'].touched
+        "
+        >Виберіть чи є проблеми з тиском</label
+      >
+      <select
+        id="pressure"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        formControlName="pressure"
+        type="number"
+        [class.border-red-500]="
+          infoForm.controls['pressure'].invalid &&
+          infoForm.controls['pressure'].touched
+        "
+        [value]="pressureTypes.None"
+      >
+        <option [value]="pressureTypes.None">Немає</option>
+        <option [value]="pressureTypes.Hypertensive">Гіпертонік</option>
+        <option [value]="pressureTypes.Hypotensive">Гіпотонік</option>
+      </select>
+      <span
+        [class]="getErrorClasses('pressure')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="AvgUpSystolicPressure"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['AvgUpSystolicPressure'].invalid &&
+          infoForm.controls['AvgUpSystolicPressure'].touched
+        "
+        >Середня верхня межа систолістичного тиску</label
+      >
+      <input
+        type="number"
+        id="AvgUpSystolicPressure"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="120"
+        formControlName="AvgUpSystolicPressure"
+        [class.border-red-500]="
+          infoForm.controls['AvgUpSystolicPressure'].invalid &&
+          infoForm.controls['AvgUpSystolicPressure'].touched
+        "
+        [step]="1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('AvgUpSystolicPressure')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="AvgDownSystolicPressure"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['AvgDownSystolicPressure'].invalid &&
+          infoForm.controls['AvgDownSystolicPressure'].touched
+        "
+        >Середня нижня межа систолістичного тиску</label
+      >
+      <input
+        type="number"
+        id="AvgDownSystolicPressure"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="80"
+        formControlName="AvgDownSystolicPressure"
+        [class.border-red-500]="
+          infoForm.controls['AvgDownSystolicPressure'].invalid &&
+          infoForm.controls['AvgDownSystolicPressure'].touched
+        "
+        [step]="1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('AvgDownSystolicPressure')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="AvgUpDialysticPressure"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['AvgUpDialysticPressure'].invalid &&
+          infoForm.controls['AvgUpDialysticPressure'].touched
+        "
+        >Середня верхня межа діалістичного тиску</label
+      >
+      <input
+        type="number"
+        id="AvgUpDialysticPressure"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="90"
+        formControlName="AvgUpDialysticPressure"
+        [class.border-red-500]="
+          infoForm.controls['AvgUpDialysticPressure'].invalid &&
+          infoForm.controls['AvgUpDialysticPressure'].touched
+        "
+        [step]="1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('AvgUpDialysticPressure')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <div class="mb-5">
+      <label
+        for="AvgDonwDialysticPressure"
+        class="block mb-2 text-sm font-medium text-gray-900 duration-200"
+        [class.text-red-500]="
+          infoForm.controls['AvgDonwDialysticPressure'].invalid &&
+          infoForm.controls['AvgDonwDialysticPressure'].touched
+        "
+        >Середня нижня межа діалістичного тиску</label
+      >
+      <input
+        type="number"
+        id="AvgDonwDialysticPressure"
+        class="bg-gray-50 border border-gray-300 text-gray-900 duration-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        placeholder="60"
+        formControlName="AvgDonwDialysticPressure"
+        [class.border-red-500]="
+          infoForm.controls['AvgDonwDialysticPressure'].invalid &&
+          infoForm.controls['AvgDonwDialysticPressure'].touched
+        "
+        [step]="1"
+        required
+      />
+      <span
+        [class]="getErrorClasses('AvgDonwDialysticPressure')"
+        class="font-medium mt-2 block text-sm text-red-500 duration-200"
+        >Обовязкове до вибору
+      </span>
+    </div>
+    <button
+      class="border-2 border-indigo-400 text-indigo-400 hover:bg-indigo-400 hover:text-white hover:border-indigo-50 duration-200 px-5 py-2 rounded-md"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>

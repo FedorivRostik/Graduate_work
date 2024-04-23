@@ -7,6 +7,8 @@ import { LoginRequest } from '../models/auth/loginRequest.model';
 import { jwtDecode } from 'jwt-decode';
 import { AppRoles } from '../utilities/enums/appRoles.enums';
 import { RegisterRequest } from '../models/auth/registerRequest.model';
+import { User } from '../models/user/user.model';
+import { UpdateUserPersonalParamsDto } from '../models/user/userUpdate.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -23,6 +25,7 @@ export class AuthService {
           localStorage.setItem('access_token', response.resultObj?.token!);
           localStorage.setItem('user_role', this.getUserRoleForLocalStorage());
           localStorage.setItem('user_id', this.getUserIdForLocalStorage());
+          localStorage.setItem('user_name', this.getUserNameForLocalStorage());
         })
       );
   }
@@ -38,6 +41,19 @@ export class AuthService {
       .pipe();
   }
 
+  updateUser(updateUserPersonalParamsDto: UpdateUserPersonalParamsDto) {
+    return this.http.put(
+      'https://localhost:7001/api/auth/profile',
+      updateUserPersonalParamsDto
+    );
+  }
+
+  getProfile(): Observable<ResponseModel<User>> {
+    return this.http.get<ResponseModel<User>>(
+      'https://localhost:7001/api/auth/profile'
+    );
+  }
+
   checkIfAuth(): boolean {
     return !!!localStorage.getItem('access_token');
   }
@@ -46,6 +62,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
   }
 
   getUserRole(): AppRoles {
@@ -54,6 +71,9 @@ export class AuthService {
 
   getUserId(): string {
     return <AppRoles>localStorage.getItem('user_id');
+  }
+  getUserName(): string {
+    return localStorage.getItem('user_name') ?? '';
   }
 
   IsRole(appRole: AppRoles): boolean {
@@ -65,13 +85,25 @@ export class AuthService {
     if (tokenStr != null) {
       try {
         const bearerToken: any = jwtDecode(tokenStr);
+        console.warn(bearerToken);
         return bearerToken.sub;
       } catch (err) {
         return null;
       }
     }
   }
-
+  private getUserNameForLocalStorage() {
+    const tokenStr = localStorage.getItem('access_token');
+    if (tokenStr != null) {
+      try {
+        const bearerToken: any = jwtDecode(tokenStr);
+        console.warn(bearerToken);
+        return bearerToken.name;
+      } catch (err) {
+        return null;
+      }
+    }
+  }
   private getUserRoleForLocalStorage(): AppRoles {
     const tokenStr = localStorage.getItem('access_token');
     if (tokenStr != null) {

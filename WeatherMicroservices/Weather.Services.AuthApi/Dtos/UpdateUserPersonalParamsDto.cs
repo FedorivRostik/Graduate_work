@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Weather.Services.AuthApi.Enums;
+﻿using Weather.Services.AuthApi.Enums;
 
-namespace Weather.Services.AuthApi.Models;
+namespace Weather.Services.AuthApi.Dtos;
 
-public class ApplicationUser : IdentityUser
+public class UpdateUserPersonalParamsDto
 {
-    public string Name { get; set; } = string.Empty;
     public double Weight { get; set; }
     public double Age { get; set; }
     public string Region { get; set; } = string.Empty;
@@ -16,4 +14,3 @@ public class ApplicationUser : IdentityUser
     public double AvgUpDialysticPressure { get; set; }
     public double AvgDonwDialysticPressure { get; set; }
 }
-

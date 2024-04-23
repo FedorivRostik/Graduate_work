@@ -1,0 +1,138 @@
+<div *ngIf="isloaded" class="bg-white overflow-hidden shadow rounded-lg border">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      {{ user?.name }} Профіль
+    </h3>
+    <div
+      class="mt-1 max-w-2xl min-w-full text-sm text-gray-500 flex justify-between items-center"
+    >
+      <p class="flex flex-1">Інофрмація про профіль {{ user?.name }}.</p>
+      <a
+        [routerLink]="['/profile/update']"
+        routerLinkActive="router-link-active"
+        class="px-8 py-3 font-bold text-white bg-indigo-500 rounded-full duration-200 hover:text-indigo-500 hover:bg-white hover:border-indigo-500 border border-white"
+        >Оновити</a
+      >
+    </div>
+  </div>
+  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+    <dl class="sm:divide-y sm:divide-gray-200">
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Ім'я</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.name }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.role"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Роль</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.role }}
+        </dd>
+      </div>
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Емейл</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.email }}
+        </dd>
+      </div>
+      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Номер</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.phoneNumber }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.region"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Область</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.region }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.city"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Місто</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.city }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.weight"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Вага</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.weight }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.age"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Вік</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.age }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.pressure !== null"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">Проблеми з тиском</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ pressureToString(user?.pressure ?? 0) }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.avgUpSystolicPressure !== null"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">
+          Середня верхня межа систолістичного тиску
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.avgUpSystolicPressure }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.avgDownSystolicPressure !== null"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">
+          Середня нижня межа систолістичного тиску
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.avgDonwDialysticPressure }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.avgUpDialysticPressure !== null"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">
+          Середня верхня межа діалістичного тиску
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.avgUpDialysticPressure }}
+        </dd>
+      </div>
+      <div
+        *ngIf="user?.avgDonwDialysticPressure !== null"
+        class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+      >
+        <dt class="text-sm font-medium text-gray-500">
+          Середня нижня межа діалістичного тиску
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          {{ user?.avgDonwDialysticPressure }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>

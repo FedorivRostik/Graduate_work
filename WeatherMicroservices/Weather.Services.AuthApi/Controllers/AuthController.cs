@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Weather.Services.AuthApi.Dtos;
 using Weather.Services.AuthApi.Dtos.Auths;
 using Weather.Services.AuthApi.Dtos.Extensions;
@@ -60,5 +62,21 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> GetUsersAsync()
     {
         return Ok(ResponseDto.SetResult(await _userService.GetAllUsersAsync()));
+    }
+
+    [Authorize]
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetUserAsync()
+    {
+        var id = User.Claims.First(x => x.Type== ClaimTypes.NameIdentifier).Value!;
+        return Ok(ResponseDto.SetResult(await _userService.GetUserAsync(id)));
+    }
+
+    [Authorize]
+    [HttpPut("profile")]
+    public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserPersonalParamsDto dto)
+    {
+        var id = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value!;
+        return Ok(ResponseDto.SetResult(await _userService.UpdateUserPersonalParamsAsync(id,dto)));
     }
 }

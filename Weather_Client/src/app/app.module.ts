@@ -33,6 +33,8 @@ import { CommonModule } from '@angular/common';
 import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiation-info/get-radiation-info.component';
 import { AirMapComponent } from './pages/maps/air-map/air-map.component';
 import { GetAirInfoComponent } from './pages/maps/air-map/get-air-info/get-air-info.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UpdateProfileComponent } from './pages/profile/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { GetAirInfoComponent } from './pages/maps/air-map/get-air-info/get-air-i
     GetRadiationInfoComponent,
     AirMapComponent,
     GetAirInfoComponent,
+    ProfileComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

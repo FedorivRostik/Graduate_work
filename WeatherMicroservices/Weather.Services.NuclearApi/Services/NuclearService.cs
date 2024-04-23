@@ -146,8 +146,8 @@ public class NuclearService : INuclearService
 
             fullText = string.Join("", geminiResponses
              .SelectMany(co => co.Candidates!)
-             .SelectMany(c => c.Content?.Parts!)
-             .Select(p => p.Text));
+             .SelectMany(c => c?.Content?.Parts)
+             .Select(p => p?.Text));
 
             match = regex.Match(fullText);
         

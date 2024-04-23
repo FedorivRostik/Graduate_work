@@ -19,6 +19,8 @@ import { PayComponent } from './pages/pay/pay.component';
 import { PaymentRedirectComponent } from './pages/payment-redirect/payment-redirect.component';
 import { GetRadiationInfoComponent } from './pages/maps/radiation-map/get-radiation-info/get-radiation-info.component';
 import { AirMapComponent } from './pages/maps/air-map/air-map.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UpdateProfileComponent } from './pages/profile/update-profile/update-profile.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,8 @@ const routes: Routes = [
       { path: 'orders', component: OrdersComponent },
       { path: 'pay/redirect', component: PaymentRedirectComponent },
       { path: 'pay', component: PayComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'profile/update', component: UpdateProfileComponent },
     ],
   },
   {
